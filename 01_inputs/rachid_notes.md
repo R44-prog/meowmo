@@ -20,7 +20,7 @@
 
 ## Constraints (non-negotiables)
 - Built with automation-first mindset
-- Minimal UI (ideally logging via WhatsApp/Telegram or simple buttons)
+- Minimal web app for both logging and visualization (strictly no WhatsApp/Telegram)
 - Fast to iterate
 - Should be usable by one person immediately
 
