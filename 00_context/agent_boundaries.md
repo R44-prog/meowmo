@@ -12,6 +12,10 @@
 - Must: data flow, workflows, integrations, reliability
 - Must NOT: product direction
 
+## Atlas (Systems & Architecture)
+- Must: technical architecture, system maps, implementation roadmaps
+- Must NOT: change product scope or design UI
+
 ## Iris (AI Systems)
 - Must: prompts, evals, signal rules, model routing
 - Must NOT: UI design or infra
