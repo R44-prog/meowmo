@@ -1,6 +1,7 @@
 # Locked Requirements — Cat Health Tracker (MVP)
 
-This document is the authoritative source of truth for the product scope. Any conflict with other documents is resolved in favor of this one.
+This document is the authoritative source of truth for product scope.
+Any conflict with other documents is resolved in favor of this one.
 
 ---
 
@@ -8,7 +9,7 @@ This document is the authoritative source of truth for the product scope. Any co
 
 ### 1.1 Single Cat MVP
 - The system must support exactly one cat per user account for V1.
-- Onboarding requires two steps: Cat Name and a "Normal Baseline" photo.
+- Onboarding requires only: Cat Name.
 
 ### 1.2 Photo-First Logging
 - A photo is **mandatory** for every daily check-in.
@@ -16,7 +17,7 @@ This document is the authoritative source of truth for the product scope. Any co
 
 ### 1.3 The Vibe Score
 - Every check-in must include a "Vibe Score" (1-5 scale).
-- UI must represent these as icons, not just numbers (Happy, Quiet, Off, Hide-y, Energetic).
+- UI should represent these as icons, not just numbers (Happy, Quiet, Off, Hide-y, Energetic).
 
 ### 1.4 Visual Timeline
 - The primary interface is a newest-first vertical timeline.
@@ -28,9 +29,12 @@ This document is the authoritative source of truth for the product scope. Any co
 
 ---
 
-## 2. Minimal Data Fields
-- **Cat**: Name, ID, Owner ID.
-- **Check-in**: ID, Cat ID, Photo URL, Vibe Score (Required), Note (Optional), Routine Flags (Optional), Timestamp.
+## 2. Minimal Data Fields (V1)
+
+- **Cat**: id, owner_id, name, created_at
+- **Daily Entry**: id, cat_id, date (YYYY-MM-DD), vibe_score (required), note (optional), created_at
+- **Photo**: id, daily_entry_id, storage_key/url, created_at
+- **Routine**: id, daily_entry_id, type, value(optional), created_at
 
 ---
 
@@ -41,6 +45,10 @@ This document is the authoritative source of truth for the product scope. Any co
 - **Messaging Integration**: No WhatsApp, Telegram, or SMS-based logging.
 - **Multi-Cat Support**: No switching between cats or aggregate views for multiple cats.
 - **Medical Taxonomy**: No complex clinical enums (e.g., specific stool types, blood markers).
+- **Baseline Computation**: No backend “normal baseline” calculation endpoints in V1.
+- **Export/PDF**: No export or vet summary generation in V1.
+- **Notifications**: No alerts/push notifications in V1.
+- **AI Insights**: No AI analysis/insights in V1.
 
 ---
 
