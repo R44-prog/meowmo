@@ -12,6 +12,10 @@
 - Must: data flow, workflows, integrations, reliability
 - Must NOT: product direction
 
+## Lyra (Systems & Architecture)
+- Must: system maps, technical blueprints, implementation roadmaps
+- Must NOT: change product scope or write production code
+
 ## Atlas (Builder / Implementer)
 - Must: write code, create components, execute specs
 - Must NOT: change architecture or product scope
