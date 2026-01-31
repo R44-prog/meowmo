@@ -39,7 +39,28 @@ Instead of proxying binary data through the Node.js API (which is slow and memor
 
 ---
 
-## 3. Implementation Status
+## 3. Proof of Implementation (POI)
+
+### POI 1: Mobile Compatibility
+- **Verification**: Uses standard `fetch` with `method: 'PUT'`. No specialized multipart/form-data libraries required. Direct compatibility with iOS Safari / Android Chrome "Add to Home Screen" sandbox.
+
+### POI 2: Binary Bypass (Zero-Byte Proxy)
+- **Verification**: The `/api/entry/photo/signed-url` endpoint returns a string (URL) only.
+- **Enforcement**: Middleware blocks any request to `/api` with a Content-Length > 1MB (except for JSON payloads).
+
+### POI 3: Ownership Security
+- **Verification**: `generateSignedUploadUrl` calls `validateCatOwnership`.
+- **Verification**: `attachPhotoToEntry` calls `validateEntryOwnership`.
+- **Proof**: If User B requests a URL for Cat A, the API returns `403 Forbidden`.
+
+### POI 4: Orphan Prevention
+- **Database level**: `photos.daily_entry_id` uses `ON DELETE CASCADE`. If an entry is deleted, the database link is wiped.
+- **Storage level**: (Roadmapped) Storage keys include `cat_id/YYYY-MM-DD`. Any bucket key without a corresponding database entry is considered "stale" and eligible for automated cleanup.
+
+---
+
+## 4. Implementation Status
 - [x] Logic defined.
-- [ ] signed-url generator service.
-- [ ] Attachment logic helper.
+- [x] Proofs documented.
+- [x] signed-url generator service.
+- [x] Attachment logic helper.
