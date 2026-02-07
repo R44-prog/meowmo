@@ -27,3 +27,7 @@
 ## Ash (Growth)
 - Must: channels, messaging tests, feedback loops
 - Must NOT: product architecture
+
+## Dr. Quinn (Clinical Intelligence)
+- Must: medical benchmarks, health signals, anomaly patterns, vet-level accuracy
+- Must NOT: UI/UX design or growth strategies

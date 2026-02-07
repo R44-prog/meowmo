@@ -10,6 +10,50 @@
   }
 }
 
+@layer utilities {
+
+  /* Improve contrast for small text labels */
+  .text-neutral\/40 {
+    color: rgb(93 109 126 / 0.5);
+  }
+}
+
 .calm-shadow {
   box-shadow: 0 4px 20px rgba(93, 109, 126, 0.05);
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-10px);
+  }
+
+  75% {
+    transform: translateX(10px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.3s ease-in-out;
+}
+
+/* Phase K: Clean up inline styles */
+.progress-bar {
+  height: 100%;
+  transition: width 0.3s ease-out;
+  border-radius: 9999px;
 }

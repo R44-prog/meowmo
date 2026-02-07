@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS daily_entries (
     date DATE NOT NULL,
     vibe_score INTEGER NOT NULL CHECK (vibe_score >= 1 AND vibe_score <= 5),
     note TEXT,
+    appetite TEXT,
+    litter TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     UNIQUE (cat_id, date)
 );

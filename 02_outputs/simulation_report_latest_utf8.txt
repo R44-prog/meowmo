@@ -1,0 +1,44 @@
+﻿Loading simulation data...
+Analyzing 50 users and 1968 entries...
+
+--- SIMULATION ANALYSIS ---
+Total Users: 50
+Active (Logged in last 3 days): 23
+At Risk / Trigger Needed (Inactive 3-14 days): 15
+Churned (Inactive > 14 days): 12
+Never Active: 0
+---------------------------
+
+[EXECUTING TRIGGERS]
+>> FIRING EMAIL to user1_sim@example.com (Last seen: 2026-01-25, 8 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user2_sim@example.com (Last seen: 2026-01-29, 4 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user5_sim@example.com (Last seen: 2026-01-25, 8 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user9_sim@example.com (Last seen: 2026-01-29, 4 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user16_sim@example.com (Last seen: 2026-01-29, 4 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user23_sim@example.com (Last seen: 2026-01-25, 8 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user28_sim@example.com (Last seen: 2026-01-29, 4 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user29_sim@example.com (Last seen: 2026-01-28, 5 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user31_sim@example.com (Last seen: 2026-01-27, 6 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user34_sim@example.com (Last seen: 2026-01-29, 4 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user39_sim@example.com (Last seen: 2026-01-27, 6 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user40_sim@example.com (Last seen: 2026-01-28, 5 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user46_sim@example.com (Last seen: 2026-01-28, 5 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user47_sim@example.com (Last seen: 2026-01-26, 7 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+>> FIRING EMAIL to user50_sim@example.com (Last seen: 2026-01-28, 5 days ago)
+   "Hey! It's been a few days. How is your cat doing?"
+
+Simulation Complete. System ready for Milestone 7 integration.

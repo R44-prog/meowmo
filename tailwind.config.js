@@ -18,4 +18,12 @@ export default {
         },
     },
     plugins: [],
+    safelist: [
+        {
+            pattern: /(bg|text)-(purple|blue|green|orange|emerald|red|indigo)-(100|400|500|600|700)/,
+        },
+        {
+            pattern: /(from|to)-(purple|blue|green|orange|emerald|red|indigo)-(400|500|600)/,
+        }
+    ],
 }

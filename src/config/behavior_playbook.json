@@ -1,0 +1,44 @@
+{
+    "categories": [
+        {
+            "id": "body_shapes",
+            "name": "Body Shapes",
+            "challenges": [
+                {
+                    "id": "loaf",
+                    "name": "The Perfect Loaf",
+                    "description": "Capture a photo of your cat with all paws tucked in.",
+                    "difficulty": "Easy",
+                    "points": 50
+                },
+                {
+                    "id": "sploot",
+                    "name": "The Full Sploot",
+                    "description": "Legs out, belly down. The ultimate stretch.",
+                    "difficulty": "Medium",
+                    "points": 100
+                }
+            ]
+        },
+        {
+            "id": "action",
+            "name": "Action & Zoomies",
+            "challenges": [
+                {
+                    "id": "mid_yawn",
+                    "name": "The Lion Roar",
+                    "description": "Catch that mid-yawn ferocity.",
+                    "difficulty": "Medium",
+                    "points": 150
+                },
+                {
+                    "id": "blep",
+                    "name": "The Tiny Blep",
+                    "description": "A tongue left out by mistake. Extremely rare.",
+                    "difficulty": "Hard",
+                    "points": 300
+                }
+            ]
+        }
+    ]
+}
