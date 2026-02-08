@@ -84,7 +84,7 @@ function App() {
     );
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/meowmo">
             <SyncStatus />
             {privacyEnabled ? (
                 <PrivacyLock>{appRoutes}</PrivacyLock>
