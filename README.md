@@ -1,4 +1,4 @@
-# Meowmo (Vibe Brain)
+# Meowmo
 
 Meowmo is a PWA designed for "calm observation" of cat health. It focuses on privacy, local-first data, and delightful UX.
 
