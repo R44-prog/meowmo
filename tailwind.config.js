@@ -7,10 +7,17 @@ export default {
     theme: {
         extend: {
             colors: {
-                background: '#FDFCF8',
-                accent: '#5D6D7E',
+                midnight: '#121212',
+                surface: '#1A1A1A',
+                background: '#121212',
+                accent: '#F5E6D3',
+                amber: {
+                    light: '#F59E0B',
+                    DEFAULT: '#D97706',
+                    dark: '#B45309',
+                },
                 success: '#82E0AA',
-                neutral: '#D5DBDB',
+                neutral: '#5D6D7E',
             },
             fontFamily: {
                 sans: ['Inter', 'Roboto', 'sans-serif'],

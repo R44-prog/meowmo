@@ -9,9 +9,9 @@ interface TrophyCaseProps {
 
 export const TrophyCase: React.FC<TrophyCaseProps> = ({ achievements }) => {
     return (
-        <div className="bg-white rounded-3xl p-6 border border-neutral/10 calm-shadow space-y-4">
+        <div className="glass rounded-3xl p-6 border border-white/5 shadow-2xl space-y-4">
             <h3 className="text-lg font-bold text-accent flex items-center gap-2">
-                <span>🏆</span> Trophy Case
+                <span className="text-amber">🏆</span> Trophy Case
             </h3>
 
             <div className="grid grid-cols-2 gap-4">
@@ -21,8 +21,8 @@ export const TrophyCase: React.FC<TrophyCaseProps> = ({ achievements }) => {
                         className={cn(
                             "relative overflow-hidden rounded-2xl p-4 flex flex-col items-center text-center space-y-2 border transition-all",
                             chem.isUnlocked
-                                ? "bg-white border-neutral/10 shadow-sm"
-                                : "bg-neutral/5 border-transparent opacity-80"
+                                ? "bg-white/5 border-white/10 shadow-xl scale-[1.02]"
+                                : "bg-black/20 border-white/5 opacity-60"
                         )}
                     >
                         {/* Icon Badge */}
@@ -30,7 +30,7 @@ export const TrophyCase: React.FC<TrophyCaseProps> = ({ achievements }) => {
                             "w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-inner relative",
                             chem.isUnlocked
                                 ? `bg-gradient-to-br ${chem.color} text-white`
-                                : "bg-neutral/20 text-neutral/40 grayscale"
+                                : "bg-white/5 text-accent/20 grayscale"
                         )}>
                             {chem.isUnlocked ? chem.icon : <Lock className="w-5 h-5" />}
                         </div>
@@ -40,16 +40,16 @@ export const TrophyCase: React.FC<TrophyCaseProps> = ({ achievements }) => {
                             <div className="font-bold text-sm text-accent leading-tight">
                                 {chem.title}
                             </div>
-                            <div className="text-[10px] text-neutral/50 font-medium mt-1">
+                            <div className="text-[10px] text-accent/40 font-medium mt-1">
                                 {chem.description}
                             </div>
                         </div>
 
                         {/* Progress Bar (if locked but started) */}
                         {!chem.isUnlocked && (chem.progress || 0) > 0 && (
-                            <div className="w-full h-1.5 bg-neutral/10 rounded-full overflow-hidden mt-1">
+                            <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden mt-1">
                                 <div
-                                    className="h-full bg-accent/20 rounded-full"
+                                    className="h-full bg-amber/40 rounded-full"
                                     style={{ width: `${chem.progress}%` }}
                                 />
                             </div>

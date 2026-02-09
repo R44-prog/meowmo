@@ -31,39 +31,39 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = React.memo(({ date, v
         <div className="flex gap-4 group">
             {/* Timeline Line & Dot */}
             <div className="flex flex-col items-center">
-                <div className={cn("w-10 h-10 rounded-full flex items-center justify-center bg-white border-2 border-neutral/10 shadow-sm z-10", vibe.color)}>
+                <div className={cn("w-10 h-10 rounded-full flex items-center justify-center bg-surface border-2 border-white/5 shadow-lg z-10", vibe.color)}>
                     {vibe.icon}
                 </div>
-                <div className="w-0.5 flex-1 bg-neutral/10 group-last:bg-transparent -mt-1" />
+                <div className="w-0.5 flex-1 bg-white/5 group-last:bg-transparent -mt-1" />
             </div>
 
             {/* Content Card */}
             <div className="flex-1 pb-10">
-                <div className="calm-shadow rounded-3xl bg-white overflow-hidden border border-neutral/5 transition-transform hover:scale-[1.005]">
+                <div className="calm-shadow rounded-3xl glass overflow-hidden border border-white/5 transition-transform hover:scale-[1.005]">
                     {/* Date Header */}
-                    <div className="px-6 py-3 bg-neutral/5 flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-xs font-semibold opacity-40">
+                    <div className="px-6 py-3 bg-white/5 flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-xs font-semibold text-accent/40">
                             <Calendar className="w-3.5 h-3.5" />
                             {new Date(date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
                         </div>
                         <div className="flex items-center gap-2">
                             {appetite && (
                                 <span className={cn(
-                                    "text-[10px] px-2 py-0.5 rounded-lg bg-white/80 flex items-center gap-1 border border-neutral/10",
-                                    appetite === 'good' ? "text-emerald-600" : appetite === 'picky' ? "text-amber-600" : "text-red-500"
+                                    "text-[10px] px-2 py-0.5 rounded-lg bg-midnight/40 flex items-center gap-1 border border-white/5",
+                                    appetite === 'good' ? "text-emerald-400" : appetite === 'picky' ? "text-amber-400" : "text-red-400"
                                 )}>
                                     {appetite === 'good' ? '🍲' : appetite === 'picky' ? '🥗' : '🚫'}
                                 </span>
                             )}
                             {litter && (
                                 <span className={cn(
-                                    "text-[10px] px-2 py-0.5 rounded-lg bg-white/80 flex items-center gap-1 border border-neutral/10",
-                                    litter === 'normal' ? "text-emerald-600" : "text-amber-600"
+                                    "text-[10px] px-2 py-0.5 rounded-lg bg-midnight/40 flex items-center gap-1 border border-white/5",
+                                    litter === 'normal' ? "text-emerald-400" : "text-amber-400"
                                 )}>
                                     {litter === 'normal' ? '✅' : '⚠️'}
                                 </span>
                             )}
-                            <span className={cn("text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-white/80", vibe.color)}>
+                            <span className={cn("text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-midnight/40", vibe.color)}>
                                 {vibe.label}
                             </span>
                         </div>
@@ -111,13 +111,13 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = React.memo(({ date, v
                                         </button>
                                     </div>
                                     {/* Dr. Quinn's Clinical Footnote */}
-                                    <div className="p-3 bg-white/40 backdrop-blur-sm flex gap-3">
-                                        <div className="w-8 h-8 rounded-full bg-accent/10 flex-shrink-0 flex items-center justify-center text-accent text-[10px] font-bold">
+                                    <div className="p-3 bg-white/5 backdrop-blur-sm flex gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-amber/10 flex-shrink-0 flex items-center justify-center text-amber text-[10px] font-bold">
                                             Q
                                         </div>
                                         <div className="space-y-1">
-                                            <span className="text-[8px] font-bold text-accent uppercase tracking-wider">Clinical Insight</span>
-                                            <p className="text-[11px] text-neutral-600 leading-tight italic">{trophy.clinicalFootnote}</p>
+                                            <span className="text-[8px] font-bold text-amber uppercase tracking-wider">Clinical Insight</span>
+                                            <p className="text-[11px] text-accent/60 leading-tight italic">{trophy.clinicalFootnote}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -125,8 +125,8 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = React.memo(({ date, v
                         )}
 
                         {note && (
-                            <div className="flex gap-3 text-sm text-neutral-600 leading-relaxed bg-neutral/5 p-4 rounded-xl border border-neutral/10 italic">
-                                <FileText className="w-4 h-4 mt-0.5 flex-shrink-0 opacity-40 text-accent" />
+                            <div className="flex gap-3 text-sm text-accent/70 leading-relaxed bg-white/5 p-4 rounded-xl border border-white/5 italic">
+                                <FileText className="w-4 h-4 mt-0.5 flex-shrink-0 opacity-40 text-amber" />
                                 <p>{note}</p>
                             </div>
                         )}

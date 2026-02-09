@@ -85,16 +85,16 @@ export const TimelinePage: React.FC<TimelinePageProps> = ({ catName }) => {
 
     return (
         <div className="pb-20"> {/* Padding for FAB */}
-            <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-md px-6 py-4 flex justify-between items-center border-b border-neutral/10">
+            <header className="sticky top-0 z-20 bg-midnight/80 backdrop-blur-md px-6 py-4 flex justify-between items-center border-b border-white/5">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center text-white text-xs font-bold">
+                    <div className="w-8 h-8 bg-amber rounded-lg flex items-center justify-center text-white text-xs font-bold shadow-lg">
                         {catName[0]}
                     </div>
-                    <h1 className="text-lg font-semibold tracking-tight text-accent/80">{catName}'s Journey</h1>
+                    <h1 className="text-lg font-semibold tracking-tight text-accent/90">{catName}'s Journey</h1>
                 </div>
                 {streakStats && streakStats.currentStreak > 0 && (
-                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 rounded-full border border-orange-100 text-orange-600 animate-in zoom-in duration-500">
-                        <Flame className="w-4 h-4 fill-orange-500" />
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber/10 rounded-full border border-amber/20 text-amber animate-in zoom-in duration-500">
+                        <Flame className="w-4 h-4 fill-amber" />
                         <span className="text-xs font-black tracking-tight">{streakStats.currentStreak}</span>
                     </div>
                 )}

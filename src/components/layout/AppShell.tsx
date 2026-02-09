@@ -34,23 +34,23 @@ export const AppShell: React.FC = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-background pb-20"> {/* pb-20 for BottomNav space */}
+        <div className="min-h-screen bg-midnight pb-20"> {/* pb-20 for BottomNav space */}
             {/* Offline/Queue Indicator */}
             {(!isOnline || queueCount > 0) && (
                 <div
-                    className="fixed top-4 right-4 z-50 bg-white border border-neutral/20 rounded-xl shadow-lg px-3 py-2 flex items-center gap-2 text-xs font-medium animate-in fade-in slide-in-from-top-2 duration-300"
+                    className="fixed top-4 right-4 z-50 glass rounded-xl shadow-2xl px-3 py-2 flex items-center gap-2 text-xs font-medium animate-in fade-in slide-in-from-top-2 duration-300"
                     role="status"
                     aria-live="polite"
                 >
                     {!isOnline ? (
                         <>
-                            <WifiOff className="w-4 h-4 text-orange-500" />
-                            <span className="text-neutral/60">Offline Mode</span>
+                            <WifiOff className="w-4 h-4 text-amber" />
+                            <span className="text-accent/60">Offline Mode</span>
                         </>
                     ) : queueCount > 0 ? (
                         <>
-                            <Upload className="w-4 h-4 text-blue-500 animate-pulse" />
-                            <span className="text-neutral/60">{queueCount} pending sync</span>
+                            <Upload className="w-4 h-4 text-blue-400 animate-pulse" />
+                            <span className="text-accent/60">{queueCount} pending sync</span>
                         </>
                     ) : null}
                 </div>

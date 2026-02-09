@@ -14,7 +14,7 @@ export const BottomNav: React.FC = () => {
     ];
 
     return (
-        <nav className="fixed bottom-0 left-0 right-0 bg-orange-50/90 backdrop-blur-xl border-t border-orange-100 px-6 py-2 pb-safe z-40 flex justify-between items-center text-xs font-medium text-accent/60 shadow-lg shadow-orange-500/5">
+        <nav className="fixed bottom-6 left-6 right-6 glass rounded-2xl px-6 py-3 pb-safe z-40 flex justify-between items-center text-xs font-medium text-accent/60 shadow-2xl">
             {navItems.map((item) => {
                 const isActive = currentPath === item.path;
                 return (
@@ -26,12 +26,12 @@ export const BottomNav: React.FC = () => {
                         className={cn(
                             "flex flex-col items-center gap-1 p-2 transition-all duration-300",
                             isActive
-                                ? "text-orange-600 scale-110"
-                                : "hover:text-orange-400 hover:scale-105"
+                                ? "text-amber scale-110"
+                                : "hover:text-accent hover:scale-105"
                         )}
                     >
                         {item.icon}
-                        <span className={cn("text-[10px]", isActive && "font-bold")}>{item.label}</span>
+                        <span className={cn("text-[10px]", isActive && "font-bold text-amber")}>{item.label}</span>
                     </Link>
                 );
             })}

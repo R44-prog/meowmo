@@ -16,14 +16,14 @@ export const HealthInsights: React.FC<HealthInsightsProps> = ({ entries, catName
 
     if (insights.length === 0) {
         return (
-            <div className="p-6 bg-emerald-50 border border-emerald-100 rounded-2xl">
+            <div className="p-6 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl animate-in fade-in duration-700">
                 <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
-                        <Info className="text-emerald-600" size={20} />
+                    <div className="flex-shrink-0 w-10 h-10 bg-emerald-500/20 rounded-xl flex items-center justify-center">
+                        <Info className="text-emerald-400" size={20} />
                     </div>
                     <div className="flex-1">
-                        <h3 className="font-bold text-emerald-900 mb-1">All Clear</h3>
-                        <p className="text-sm text-emerald-700 leading-relaxed">
+                        <h3 className="font-bold text-emerald-400 mb-1">All Clear</h3>
+                        <p className="text-sm text-emerald-400/80 leading-relaxed">
                             We haven't detected any concerning patterns in {catName}'s recent observations. Keep up the good tracking!
                         </p>
                     </div>
@@ -36,7 +36,7 @@ export const HealthInsights: React.FC<HealthInsightsProps> = ({ entries, catName
         <section className="space-y-4" aria-labelledby="health-insights-heading" role="region">
             <div className="flex items-center justify-between">
                 <h2 id="health-insights-heading" className="text-lg font-bold text-accent">Health Insights</h2>
-                <span className="text-xs font-medium text-neutral/40 uppercase tracking-wider" aria-live="polite">
+                <span className="text-xs font-medium text-accent/30 uppercase tracking-wider" aria-live="polite">
                     {insights.length} pattern{insights.length !== 1 ? 's' : ''} noticed
                 </span>
             </div>
@@ -122,18 +122,18 @@ const InsightCard: React.FC<InsightCardProps> = ({ insight, isExpanded, onToggle
                     </p>
 
                     {isExpanded && (
-                        <div className={cn("pt-3 border-t space-y-3 animate-in fade-in slide-in-from-top-2 duration-200", config.border)}>
-                            <div className="text-xs leading-relaxed opacity-80">
-                                <strong>Why we noticed this:</strong><br />
+                        <div className={cn("pt-3 border-t space-y-3 animate-in fade-in slide-in-from-top-2 duration-200 border-white/5")}>
+                            <div className="text-xs leading-relaxed text-accent/60">
+                                <strong className="text-accent/90">Why we noticed this:</strong><br />
                                 {getInsightContext(insight)}
                             </div>
 
                             {insight.severity === 'vet_recommended' && (
                                 <button
                                     onClick={onExportClick}
-                                    className="w-full py-2.5 bg-white border border-current rounded-xl font-medium text-sm hover:bg-black/5 transition-colors flex items-center justify-center gap-2"
+                                    className="w-full py-2.5 glass border border-amber/20 rounded-xl font-bold text-xs text-amber hover:bg-amber/10 transition-colors flex items-center justify-center gap-2 uppercase tracking-widest shadow-xl"
                                 >
-                                    <FileDown size={16} />
+                                    <FileDown size={14} />
                                     Export Timeline for Vet
                                 </button>
                             )}

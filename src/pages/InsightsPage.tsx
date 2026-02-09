@@ -71,12 +71,12 @@ export const InsightsPage: React.FC = () => {
         <div className="p-6 pt-12 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <header className="flex justify-between items-end">
                 <div>
-                    <div className="text-xs font-bold uppercase tracking-widest text-neutral/40 mb-1">Health Check-In</div>
-                    <h1 className="text-2xl font-bold text-accent">{catName}'s Well-Being</h1>
+                    <div className="text-xs font-bold uppercase tracking-widest text-accent/30 mb-1">Health Check-In</div>
+                    <h1 className="text-2xl font-bold text-accent">Well-Being</h1>
                 </div>
                 {streakStats?.currentStreak > 0 && (
-                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 rounded-full border border-orange-100 text-orange-600">
-                        <Flame className="w-3.5 h-3.5 fill-orange-500" />
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber/10 rounded-full border border-amber/20 text-amber">
+                        <Flame className="w-3.5 h-3.5 fill-amber" />
                         <span className="text-[11px] font-black tracking-tight">{streakStats.currentStreak}d</span>
                     </div>
                 )}
@@ -96,7 +96,7 @@ export const InsightsPage: React.FC = () => {
             {/* 🧠 THE BRAIN: AI Insights Section */}
             {brainInsights.length > 0 && (
                 <div className="space-y-3">
-                    <h3 className="text-sm font-bold text-accent/50 flex items-center gap-2 uppercase tracking-wide">
+                    <h3 className="text-sm font-bold text-amber/60 flex items-center gap-2 uppercase tracking-wide">
                         <span className="text-lg">🧠</span> Brain Insights
                     </h3>
                     <div className="grid gap-2">
@@ -123,18 +123,18 @@ export const InsightsPage: React.FC = () => {
             />
 
             {/* Streak Card - Simplified */}
-            <div className="bg-white p-5 rounded-2xl border border-neutral/10 calm-shadow">
+            <div className="glass p-5 rounded-2xl border border-white/5 shadow-2xl">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="p-2 bg-orange-50 rounded-lg">
-                            <Flame className="w-5 h-5 text-orange-500" />
+                        <div className="p-2 bg-amber/10 rounded-lg">
+                            <Flame className="w-5 h-5 text-amber" />
                         </div>
                         <div>
                             <div className="text-sm font-bold text-accent">Log Streak</div>
-                            <div className="text-xs text-neutral/50">Consecutive days</div>
+                            <div className="text-xs text-accent/40">Consecutive days</div>
                         </div>
                     </div>
-                    <div className="text-3xl font-bold text-orange-600">{calculateStreak()}</div>
+                    <div className="text-3xl font-bold text-amber">{calculateStreak()}</div>
                 </div>
             </div>
 
@@ -145,7 +145,7 @@ export const InsightsPage: React.FC = () => {
                     Vibe Breakdown
                 </h3>
 
-                <div className="bg-white rounded-2xl p-5 border border-neutral/10 calm-shadow space-y-4">
+                <div className="glass rounded-2xl p-5 border border-white/5 shadow-2xl space-y-4">
                     {Object.entries(VIBE_MAP).map(([score, vibe]) => {
                         const count = vibeDistribution[Number(score)] || 0;
                         const percentage = entries.length > 0 ? (count / entries.length) * 100 : 0;
@@ -154,13 +154,13 @@ export const InsightsPage: React.FC = () => {
 
                         return (
                             <div key={score} className="space-y-1">
-                                <div className="flex justify-between text-xs">
-                                    <span className="font-medium text-neutral/70 flex items-center gap-1">
+                                <div className="flex justify-between text-[11px]">
+                                    <span className="font-medium text-accent/70 flex items-center gap-1">
                                         {vibe.icon} {vibe.label}
                                     </span>
-                                    <span className="text-neutral/40">{count} logs ({Math.round(percentage)}%)</span>
+                                    <span className="text-accent/30">{count} logs ({Math.round(percentage)}%)</span>
                                 </div>
-                                <div className="h-2 bg-neutral/5 rounded-full overflow-hidden">
+                                <div className="h-2 bg-white/5 rounded-full overflow-hidden">
                                     <div
                                         className={cn("h-full rounded-full transition-all duration-1000 ease-out", vibe.color.replace('text-', 'bg-'))}
                                         style={{ width: `${percentage}%` }}
@@ -170,7 +170,7 @@ export const InsightsPage: React.FC = () => {
                         );
                     })}
                     {entries.length === 0 && (
-                        <div className="text-center text-sm text-neutral/40 py-4">
+                        <div className="text-center text-sm text-accent/30 py-4">
                             No vibes logged yet.
                         </div>
                     )}
@@ -178,17 +178,17 @@ export const InsightsPage: React.FC = () => {
             </div>
 
             {/* Total Logs */}
-            <div className="bg-blue-50/50 p-4 rounded-xl flex items-center justify-between border border-blue-100/50">
+            <div className="bg-amber/5 p-4 rounded-xl flex items-center justify-between border border-amber/10">
                 <div className="flex items-center gap-3">
-                    <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
+                    <div className="p-2 bg-amber/10 rounded-lg text-amber">
                         <TrendingUp className="w-5 h-5" />
                     </div>
                     <div>
                         <div className="text-sm font-bold text-accent">Total Memories</div>
-                        <div className="text-xs text-neutral/50">Since joining</div>
+                        <div className="text-xs text-accent/40">Since joining</div>
                     </div>
                 </div>
-                <div className="text-xl font-bold text-blue-600">{entries.length}</div>
+                <div className="text-xl font-bold text-amber">{entries.length}</div>
             </div>
 
             {/* 🎮 THE GAME: Trophy Case (Opt-in) */}
