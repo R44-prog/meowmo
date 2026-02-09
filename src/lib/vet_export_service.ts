@@ -58,6 +58,30 @@ export async function generateVetExport(entries: TimelineEntry[], catName: strin
     doc.setTextColor(0, 0, 0);
     doc.text(`Total Logs: ${entries.length} | Avg Vibe: ${avgVibe.toFixed(1)} | Concerning Days: ${concerningDays}`, 14, 38);
 
+    // Clinical Insights Section (Brain 2.0)
+    const { analyzeHealthPatterns } = await import('./health_analysis_service');
+    const insights = analyzeHealthPatterns(entries, catName);
+
+    if (insights.length > 0) {
+        doc.setFillColor(245, 245, 245);
+        doc.roundedRect(14, 42, pageWidth - 28, 12 + (insights.length * 6), 3, 3, 'F');
+
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(241, 90, 34);
+        doc.text('Clinical Observations & Trends', 18, 48);
+
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(50, 50, 50);
+
+        insights.forEach((insight, index) => {
+            doc.text(`• [${insight.severity.toUpperCase()}] ${insight.title}: ${insight.description.substring(0, 80)}...`, 18, 54 + (index * 6));
+        });
+    }
+
+    const tableStartY = insights.length > 0 ? 60 + (insights.length * 6) : 45;
+
     // Timeline Table
     const tableData = entries.map(entry => [
         new Date(entry.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
@@ -68,7 +92,7 @@ export async function generateVetExport(entries: TimelineEntry[], catName: strin
     ]);
 
     autoTable(doc, {
-        startY: 45,
+        startY: tableStartY,
         head: [['Date', 'Mood', 'Appetite', 'Litter', 'Notes']],
         body: tableData,
         theme: 'striped',
@@ -95,7 +119,7 @@ export async function generateVetExport(entries: TimelineEntry[], catName: strin
     });
 
     // Footer
-    const finalY = (doc as any).lastAutoTable.finalY || 45;
+    const finalY = (doc as any).lastAutoTable.finalY || tableStartY;
     const pageHeight = doc.internal.pageSize.getHeight();
 
     doc.setFontSize(8);

@@ -31,3 +31,8 @@
 ## Dr. Quinn (Clinical Intelligence)
 - Must: medical benchmarks, health signals, anomaly patterns, vet-level accuracy
 - Must NOT: UI/UX design or growth strategies
+
+## Deliberation Protocol
+- **Council Chamber**: All major architectural, strategic, or thematic changes MUST be discussed in `01_deliberations`.
+- **Transparency**: Transcripts of agent discussions must be saved as Markdown files and linked in Council Reports.
+- **Decision Flow**: Discussion -> Consensus/Founder Decision -> Integration -> Report.

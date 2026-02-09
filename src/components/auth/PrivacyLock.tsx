@@ -12,7 +12,7 @@ export const PrivacyLock: React.FC<PrivacyLockProps> = ({ children }) => {
     const [error, setError] = useState(false);
     const [isSimulatingBiometrics, setIsSimulatingBiometrics] = useState(false);
 
-    const CORRECT_PIN = '1234'; // Default for Alpha
+    const CORRECT_PIN = localStorage.getItem('privacyPin') || '1234';
 
     const handlePinInput = (digit: string) => {
         if (pin.length < 4) {

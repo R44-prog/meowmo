@@ -1,0 +1,119 @@
+import React from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { Trophy, Share2, Sparkles, Heart, Info, ChevronLeft } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+export const AchievementPage: React.FC = () => {
+    const { id } = useParams<{ id: string }>();
+
+    // Mock data for the demonstration
+    // In production, this would fetch from Supabase/Dexie based on the short-ID
+    const trophy = {
+        catName: localStorage.getItem('catName') || "Your Cat",
+        description: "As a floating island in a sea of clouds, maintaining perfect balance.",
+        imageUrl: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1000&auto=format&fit=crop",
+        clinicalFootnote: "A perfect loaf is a signs of a relaxed and secure cat. It shows they feel safe enough to hide their 'getaway' limbs.",
+        behavior: "The Perfect Loaf",
+        earnedAt: new Date().toLocaleDateString()
+    };
+
+    const handleShare = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: `${trophy.catName}'s Surreal Milestone`,
+                text: `Look at this amazing health milestone Luna achieved on Meowmo!`,
+                url: window.location.href,
+            });
+        }
+    };
+
+    return (
+        <div className="min-h-screen bg-neutral/5 pb-20">
+            {/* Header / Navigation */}
+            <div className="p-6 flex items-center justify-between max-w-lg mx-auto">
+                <Link to="/" className="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center text-neutral/40 hover:text-accent transition-all">
+                    <ChevronLeft size={20} />
+                </Link>
+                <div className="flex items-center gap-2">
+                    <Sparkles size={16} className="text-yellow-500 fill-yellow-500" />
+                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-neutral/40">Meowmo Achievement</span>
+                </div>
+                <div className="w-10" /> {/* Spacer */}
+            </div>
+
+            <main className="max-w-md mx-auto px-6 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+                {/* The Hero Trophy Card */}
+                <div className="relative group">
+                    <div className="absolute -inset-4 bg-gradient-to-br from-accent/20 via-purple-100/30 to-accent/20 blur-3xl opacity-50 transition-opacity group-hover:opacity-70" />
+                    <div className="relative calm-shadow bg-white rounded-[2rem] overflow-hidden border border-neutral/10">
+                        <div className="aspect-square relative overflow-hidden group/img">
+                            <img
+                                src={trophy.imageUrl}
+                                alt="Surreal Trophy"
+                                className="w-full h-full object-cover scale-105 group-hover/img:scale-110 transition-transform duration-[2000ms]"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                            <div className="absolute bottom-6 left-6 right-6">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <Trophy size={16} className="text-yellow-400 fill-yellow-400" />
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-white/80">Surreal Achievement Unlocked</span>
+                                </div>
+                                <h1 className="text-2xl font-bold text-white leading-tight drop-shadow-md">{trophy.behavior}</h1>
+                            </div>
+                        </div>
+
+                        <div className="p-6 space-y-6">
+                            <div className="space-y-2">
+                                <p className="text-lg font-medium text-neutral-800 leading-snug">
+                                    {trophy.description}
+                                </p>
+                                <div className="flex items-center gap-2 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
+                                    <Heart size={12} className="text-red-400 fill-red-400" />
+                                    <span>Earned by {trophy.catName} on {trophy.earnedAt}</span>
+                                </div>
+                            </div>
+
+                            {/* Dr. Quinn's Segment */}
+                            <div className="p-4 bg-accent/5 rounded-2xl border border-accent/10 space-y-3 relative overflow-hidden">
+                                <div className="absolute top-0 right-0 p-3 opacity-5">
+                                    <Info size={40} />
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center text-accent text-[8px] font-black">Q</div>
+                                    <span className="text-[9px] font-black uppercase tracking-widest text-accent/80">Clinical Insight</span>
+                                </div>
+                                <p className="text-xs text-neutral-600 italic leading-relaxed relative z-10">
+                                    "{trophy.clinicalFootnote}"
+                                </p>
+                            </div>
+
+                            {/* Viral Hook */}
+                            <div className="pt-2 text-center space-y-4">
+                                <p className="text-[10px] text-neutral-400 leading-relaxed font-medium">
+                                    Meowmo helps you bond with your cat through surreal art and quiet observation.
+                                </p>
+                                <button
+                                    onClick={handleShare}
+                                    className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-accent text-white rounded-2xl font-bold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-accent/20"
+                                >
+                                    <Share2 size={20} />
+                                    Share this Achievement
+                                </button>
+                                <Link to="/" className="inline-block text-[11px] font-bold text-accent/60 uppercase tracking-widest hover:text-accent transition-colors">
+                                    Start your own observation journey
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Footer Disclaimer (Ethical Growth) */}
+                <div className="text-center px-4">
+                    <p className="text-[9px] text-neutral-300 leading-relaxed uppercase tracking-widest font-bold">
+                        Not Medical Advice • Record for calm, consult for care
+                    </p>
+                </div>
+            </main>
+        </div>
+    );
+};

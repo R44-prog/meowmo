@@ -9,6 +9,10 @@ import { TrophyCase } from '@/components/gamification/TrophyCase';
 import { ExportButton } from '@/components/export/ExportButton';
 import { PremiumGate } from '@/components/premium/PremiumGate';
 import { HealthInsights } from '@/components/insights/HealthInsights';
+import { HealthPulse } from '@/components/insights/HealthPulse';
+import { WeeklyDigestCard } from '@/components/insights/WeeklyDigestCard';
+import { RetentionService } from '@/services/retention/RetentionService';
+import { WeeklyDigestService, WeeklyDigest } from '@/services/intelligence/WeeklyDigestService';
 import { TimelineEntry } from '@/lib/health_analysis_service';
 
 export const InsightsPage: React.FC = () => {
@@ -16,6 +20,8 @@ export const InsightsPage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [brainInsights, setBrainInsights] = useState<BrainInsight[]>([]);
     const [achievements, setAchievements] = useState<Achievement[]>([]);
+    const [streakStats, setStreakStats] = useState<any>(null);
+    const [weeklyDigest, setWeeklyDigest] = useState<WeeklyDigest | null>(null);
     const [isPremium, setIsPremium] = useState(localStorage.getItem('isPremium') === 'true');
     const [showPaywall, setShowPaywall] = useState(false);
     // In V1, we assume a single user context.
@@ -23,46 +29,25 @@ export const InsightsPage: React.FC = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        // Using fixed catId for Milestone 7
-        getTimeline("dummy-user", "6a09dc55-3015-43d3-85a0-d0c1a822ad22", { limit: 100 })
-            .then(data => {
+        const catId = "6a09dc55-3015-43d3-85a0-d0c1a822ad22";
+        getTimeline("dummy-user", catId, { limit: 100 })
+            .then(async data => {
                 setEntries(data);
                 setBrainInsights(analyzeTimeline(data));
 
-                // Calculate streak specifically for games
-                // Re-using the logic inside calculateStreak would be better if extracted, 
-                // but for now we can just let the component render cycle calculate it or extract it.
-                // Let's extract streak calculation to use it for achievements.
-                const streak = calculateLogicStreak(data);
-                setAchievements(checkAchievements(data, streak));
+                const stats = await RetentionService.calculateStreak(catId);
+                setStreakStats(stats);
+                setAchievements(checkAchievements(data, stats.currentStreak));
+
+                // Generate Weekly Digest
+                const digest = await WeeklyDigestService.generateDigest(catId, catName);
+                setWeeklyDigest(digest);
 
                 setIsLoading(false);
             });
     }, []);
 
-    // --- Logic extracted from AdminPanel ---
-    const calculateLogicStreak = (data: any[]) => {
-        if (data.length === 0) return 0;
-        const sortedDates = data
-            .map(e => new Date(e.date).toDateString())
-            .filter((v, i, a) => a.indexOf(v) === i)
-            .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-
-        // ... (Simplified copy of streak logic for effect scope)
-        // Ideally we refactor this utility.
-        let streak = 1;
-        const today = new Date().toDateString();
-        if (sortedDates[0] !== today && sortedDates[0] !== new Date(Date.now() - 86400000).toDateString()) {
-            return 0;
-        }
-        for (let i = 0; i < sortedDates.length - 1; i++) {
-            if (new Date(sortedDates[i]).getTime() - new Date(sortedDates[i + 1]).getTime() === 86400000) streak++;
-            else break;
-        }
-        return streak;
-    };
-
-    const calculateStreak = () => calculateLogicStreak(entries);
+    const calculateStreak = () => streakStats?.currentStreak || 0;
 
 
     const VIBE_MAP: Record<number, { icon: React.ReactNode, label: string, color: string }> = {
@@ -84,10 +69,29 @@ export const InsightsPage: React.FC = () => {
 
     return (
         <div className="p-6 pt-12 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <header>
-                <div className="text-xs font-bold uppercase tracking-widest text-neutral/40 mb-1">Health Check-In</div>
-                <h1 className="text-2xl font-bold text-accent">{catName}'s Well-Being</h1>
+            <header className="flex justify-between items-end">
+                <div>
+                    <div className="text-xs font-bold uppercase tracking-widest text-neutral/40 mb-1">Health Check-In</div>
+                    <h1 className="text-2xl font-bold text-accent">{catName}'s Well-Being</h1>
+                </div>
+                {streakStats?.currentStreak > 0 && (
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 rounded-full border border-orange-100 text-orange-600">
+                        <Flame className="w-3.5 h-3.5 fill-orange-500" />
+                        <span className="text-[11px] font-black tracking-tight">{streakStats.currentStreak}d</span>
+                    </div>
+                )}
             </header>
+
+            {/* 📅 WEEKLY DIGEST (Phase N-3) */}
+            {weeklyDigest && <WeeklyDigestCard digest={weeklyDigest} />}
+
+            {/* 🏥 HEALTH PULSE: Autonomous Intelligence Indicator */}
+            <HealthPulse
+                status={brainInsights.some(i => i.severity === 'attention') ? 'attention' :
+                    brainInsights.some(i => i.severity === 'vet_required') ? 'vet_required' : 'stable'}
+                catName={catName}
+                lastChecked="Just now"
+            />
 
             {/* 🧠 THE BRAIN: AI Insights Section */}
             {brainInsights.length > 0 && (

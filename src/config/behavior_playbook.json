@@ -2,7 +2,7 @@
     "categories": [
         {
             "id": "body_shapes",
-            "name": "Body Shapes",
+            "name": "Zen Silhouettes",
             "challenges": [
                 {
                     "id": "loaf",
@@ -17,19 +17,33 @@
                     "description": "Legs out, belly down. The ultimate stretch.",
                     "difficulty": "Medium",
                     "points": 100
+                },
+                {
+                    "id": "shrimp",
+                    "name": "The Shrimp",
+                    "description": "Perfectly curved, tail to nose. A geometric masterpiece.",
+                    "difficulty": "Medium",
+                    "points": 120
                 }
             ]
         },
         {
-            "id": "action",
-            "name": "Action & Zoomies",
+            "id": "glitches",
+            "name": "Glitches in the Matrix",
             "challenges": [
                 {
-                    "id": "mid_yawn",
-                    "name": "The Lion Roar",
-                    "description": "Catch that mid-yawn ferocity.",
+                    "id": "airplane_ears",
+                    "name": "Airplane Ears",
+                    "description": "Flat ears, high alert. Communication or irritation?",
                     "difficulty": "Medium",
                     "points": 150
+                },
+                {
+                    "id": "meerkat",
+                    "name": "Meerkat Mode",
+                    "description": "Standing on hind legs. A rare glitch in reality.",
+                    "difficulty": "Hard",
+                    "points": 300
                 },
                 {
                     "id": "blep",
@@ -37,6 +51,26 @@
                     "description": "A tongue left out by mistake. Extremely rare.",
                     "difficulty": "Hard",
                     "points": 300
+                }
+            ]
+        },
+        {
+            "id": "clinical",
+            "name": "Observations (Dr. Quinn)",
+            "challenges": [
+                {
+                    "id": "low_crouch",
+                    "name": "The Low Crouch",
+                    "description": "Deep focus or belly protection? Vital for baseline health.",
+                    "difficulty": "Medium",
+                    "points": 100
+                },
+                {
+                    "id": "zoomie_eyes",
+                    "name": "Starlight Pupils",
+                    "description": "Full dilation. Energy is at maximum capacity.",
+                    "difficulty": "Medium",
+                    "points": 150
                 }
             ]
         }

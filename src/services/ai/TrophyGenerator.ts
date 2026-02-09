@@ -10,6 +10,7 @@ export interface TrophyScene {
     description: string;
     imageUrl: string;
     unlockedAt: string;
+    clinicalFootnote: string; // Dr. Quinn's requirement for transparency
 }
 
 export class TrophyGenerator {
@@ -23,28 +24,38 @@ export class TrophyGenerator {
         // Simulating API latency
         await new Promise(resolve => setTimeout(resolve, 2000));
 
-        const scenes: Record<string, { desc: string, url: string }> = {
+        const scenes: Record<string, { desc: string, url: string, footnote: string }> = {
             'loaf': {
-                desc: `${catName} as a floating island in a sea of clouds.`,
-                url: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1000&auto=format&fit=crop'
+                desc: `${catName} as a floating island in a sea of clouds, maintaining perfect balance.`,
+                url: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1000&auto=format&fit=crop',
+                footnote: "A perfect loaf is a signs of a relaxed and secure cat. It shows they feel safe enough to hide their 'getaway' limbs."
             },
             'sploot': {
-                desc: `${catName} stretching across the rings of Saturn.`,
-                url: 'https://images.unsplash.com/photo-1573865662567-57636e3b564c?q=80&w=1000&auto=format&fit=crop'
+                desc: `${catName} stretching across the gold-dusted rings of Saturn.`,
+                url: 'https://images.unsplash.com/photo-1573865662567-57636e3b564c?q=80&w=1000&auto=format&fit=crop',
+                footnote: "Splooting helps regulate body temperature and shows great hip flexibility. A classic sign of a chilled-out cat."
             },
-            'mid_yawn': {
-                desc: `${catName}'s yawn echoing through a neon cyberpunk city.`,
-                url: 'https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1000&auto=format&fit=crop'
+            'shrimp': {
+                desc: `${catName} as a perfectly curved moon in a starlit nebula.`,
+                url: 'https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1000&auto=format&fit=crop',
+                footnote: "The 'shrimp' pose protects vital organs. Seeing this during deep sleep indicates high trust and REM-level relaxation."
+            },
+            'airplane_ears': {
+                desc: `${catName} as a supersonic pilot navigating through a neon cyberpunk sky.`,
+                url: 'https://images.unsplash.com/photo-1495360010541-f48722b34f7d?q=80&w=1000&auto=format&fit=crop',
+                footnote: "Airplane ears are used for 180-degree audio tracking. It's a sign of a cat being highly tuned to their environment."
             },
             'blep': {
-                desc: `${catName} as the main exhibit in the Louvre.`,
-                url: 'https://images.unsplash.com/photo-1533733508357-36105b58327d?q=80&w=1000&auto=format&fit=crop'
+                desc: `${catName} as the main exhibit in the Louvre, a masterpiece of adorable calculation.`,
+                url: 'https://images.unsplash.com/photo-1533733508357-36105b58327d?q=80&w=1000&auto=format&fit=crop',
+                footnote: "The 'Blep' often happens when a cat's scent analysis (flehmen response) is interrupted. It's harmless and charming."
             }
         };
 
         const sceneData = scenes[behavior] || {
-            desc: `${catName} in a majestic wonderland.`,
-            url: 'https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=1000&auto=format&fit=crop'
+            desc: `${catName} in a majestic wonderland of soft lights and floating colors.`,
+            url: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1000&auto=format&fit=crop',
+            footnote: "Every capture is a step towards understanding your cat's unique health story."
         };
 
         return {
@@ -52,7 +63,8 @@ export class TrophyGenerator {
             challengeId: behavior,
             description: sceneData.desc,
             imageUrl: sceneData.url,
-            unlockedAt: new Date().toISOString()
+            unlockedAt: new Date().toISOString(),
+            clinicalFootnote: sceneData.footnote
         };
     }
 }

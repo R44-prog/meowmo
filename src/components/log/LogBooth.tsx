@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Camera, Check, X, Smile, Cloud, Package, Zap, FileText, Loader2 } from 'lucide-react'
+import { Camera, Check, X, Smile, Cloud, Package, Zap, FileText, Loader2, Trophy } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { uploadPhoto } from '../../lib/storage_service'
 import { upsertDailyEntry } from '../../lib/entry_service'
 import { compressImage } from '../../lib/image_service'
 import { useToast } from '../ui/Toast';
+import { TrophyGenerator } from '../../services/ai/TrophyGenerator';
+import behaviorPlaybook from '../../config/behavior_playbook.json';
 
 interface LogBoothProps {
     isOpen: boolean;
@@ -23,15 +25,17 @@ const VIBE_OPTIONS = [
 
 export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, catName }) => {
     const { showToast } = useToast();
-    const [step, setStep] = useState<'photo' | 'vibe' | 'note'>('photo');
+    const [step, setStep] = useState<'photo' | 'vibe' | 'behavior' | 'note'>('photo');
     const [isUploading, setIsUploading] = useState(false);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [vibe, setVibe] = useState<number | null>(null);
     const [appetite, setAppetite] = useState<'good' | 'picky' | 'none'>('good');
     const [litter, setLitter] = useState<'normal' | 'off'>('normal');
+    const [behavior, setBehavior] = useState<string | null>(null);
     const [note, setNote] = useState('');
     const [showPhotoError, setShowPhotoError] = useState(false);
+    const [generatedTrophy, setGeneratedTrophy] = useState<any | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -62,14 +66,20 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
 
         setIsUploading(true);
         try {
-            // 1. Compress the image before upload
+            // 1. Generate Trophy if behavior is tagged
+            let trophy = null;
+            if (behavior) {
+                trophy = await TrophyGenerator.generateScene(catName, behavior);
+                setGeneratedTrophy(trophy);
+            }
+
+            // 2. Compress the image before upload
             const compressedFile = await compressImage(selectedFile);
 
-            // 2. Perform the physical upload
-            // Using the test cat ID for now
+            // 3. Perform the physical upload
             const { storageKey, publicUrl } = await uploadPhoto("6a09dc55-3015-43d3-85a0-d0c1a822ad22", compressedFile);
 
-            // 2. Save the full entry
+            // 4. Save the full entry
             onSave({
                 id: crypto.randomUUID(),
                 date: new Date().toISOString(),
@@ -78,19 +88,19 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                 litter,
                 note: note,
                 photoUrl: publicUrl,
-                storageKey: storageKey
+                storageKey: storageKey,
+                behaviorId: behavior,
+                trophy: trophy
             });
 
-            showToast("Activity recorded successfully", "success");
+            if (trophy) {
+                showToast(`🏆 ${catName} earned a trophy!`, "success");
+            } else {
+                showToast("Activity recorded successfully", "success");
+            }
 
             // Reset and close
-            setStep('photo');
-            setPreviewUrl(null);
-            setSelectedFile(null);
-            setVibe(null);
-            setAppetite('good');
-            setLitter('normal');
-            setNote('');
+            resetLog();
             onClose();
         } catch (err) {
             console.error("[LOGBOOTH] Save failed:", err);
@@ -98,6 +108,18 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
         } finally {
             setIsUploading(false);
         }
+    };
+
+    const resetLog = () => {
+        setStep('photo');
+        setPreviewUrl(null);
+        setSelectedFile(null);
+        setVibe(null);
+        setAppetite('good');
+        setLitter('normal');
+        setBehavior(null);
+        setNote('');
+        setGeneratedTrophy(null);
     };
 
     return (
@@ -119,12 +141,10 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                 <div className="flex-1 overflow-y-auto p-6 space-y-8">
                     {/* Progress Indicator */}
                     <div className="flex gap-2">
-                        {[1, 2, 3].map((i) => (
-                            <div key={i} className={cn(
+                        {['photo', 'vibe', 'behavior', 'note'].map((s, i) => (
+                            <div key={s} className={cn(
                                 "h-1 flex-1 rounded-full transition-colors",
-                                (i === 1 && step === 'photo') || (i === 2 && step === 'vibe') || (i === 3 && step === 'note')
-                                    ? "bg-accent"
-                                    : "bg-neutral/10"
+                                step === s ? "bg-accent" : "bg-neutral/10"
                             )} />
                         ))}
                     </div>
@@ -163,22 +183,6 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                                 />
                             </div>
 
-                            <button
-                                onClick={async () => {
-                                    // Simulation Mode
-                                    const response = await fetch('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=1000');
-                                    const blob = await response.blob();
-                                    const file = new File([blob], 'simulated-cat.jpg', { type: 'image/jpeg' });
-                                    setSelectedFile(file);
-                                    setPreviewUrl(URL.createObjectURL(file));
-                                    setStep('vibe');
-                                }}
-                                id="simulate-photo-btn"
-                                className="w-full py-3 border-2 border-accent/20 text-accent rounded-2xl font-medium hover:bg-accent/5 transition-colors flex items-center justify-center gap-2"
-                            >
-                                <span className="opacity-60">Testing?</span>
-                                Simulate Photo Capture
-                            </button>
                         </div>
                     )}
 
@@ -204,12 +208,7 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                                             key={opt.score}
                                             onClick={() => {
                                                 setVibe(opt.score);
-                                                // Quick Log: If it's a "Happy" vibe, we can often skip the note for speed
-                                                if (opt.score === 1) {
-                                                    setStep('note');
-                                                } else {
-                                                    setStep('note');
-                                                }
+                                                setStep('behavior');
                                             }}
                                             className={cn(
                                                 "flex-shrink-0 w-32 aspect-square snap-center rounded-3xl border-2 flex flex-col items-center justify-center gap-2 transition-all active:scale-95 group",
@@ -246,7 +245,7 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                                 </div>
                                 <button
                                     onClick={() => {
-                                        if (!vibe) setVibe(1); // Default to happy if nothing selected
+                                        if (!vibe) setVibe(1);
                                         handleSave();
                                     }}
                                     className="px-4 py-2 bg-accent text-white text-xs font-bold rounded-xl shadow-sm hover:scale-105 active:scale-95 transition-all"
@@ -254,6 +253,53 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                                     Quick Save
                                 </button>
                             </div>
+                        </div>
+                    )}
+
+                    {step === 'behavior' && (
+                        <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
+                            <div className="text-center space-y-2">
+                                <h3 className="text-xl font-medium">Any specific behavior?</h3>
+                                <p className="text-sm opacity-60">Tagging a behavior may earn {catName} a special trophy.</p>
+                            </div>
+
+                            <div className="grid grid-cols-1 gap-3">
+                                {behaviorPlaybook.categories.map(cat => (
+                                    <div key={cat.id} className="space-y-2">
+                                        <h4 className="text-[10px] font-bold uppercase tracking-wider opacity-40 ml-1">{cat.name}</h4>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            {cat.challenges.map(challenge => (
+                                                <button
+                                                    key={challenge.id}
+                                                    onClick={() => {
+                                                        setBehavior(challenge.id);
+                                                        setStep('note');
+                                                    }}
+                                                    className={cn(
+                                                        "p-3 rounded-2xl border text-left transition-all active:scale-95",
+                                                        behavior === challenge.id
+                                                            ? "border-accent bg-accent/5 ring-2 ring-accent/10"
+                                                            : "border-neutral/10 hover:border-accent/40 bg-white"
+                                                    )}
+                                                >
+                                                    <div className="font-bold text-xs truncate">{challenge.name}</div>
+                                                    <div className="text-[10px] opacity-40 truncate">{challenge.difficulty}</div>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <button
+                                onClick={() => {
+                                    setBehavior(null);
+                                    setStep('note');
+                                }}
+                                className="w-full py-3 text-sm font-medium opacity-40 hover:opacity-100 transition-opacity"
+                            >
+                                Skip behavior tagging
+                            </button>
                         </div>
                     )}
 
@@ -327,8 +373,8 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                                     <Loader2 className="animate-spin" size={24} />
                                 ) : (
                                     <>
-                                        <Check size={24} />
-                                        Record Observation
+                                        {behavior ? <Trophy size={24} /> : <Check size={24} />}
+                                        {behavior ? "Capture & Earn Trophy" : "Record Observation"}
                                     </>
                                 )}
                             </button>
@@ -340,10 +386,14 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                 {step !== 'photo' && (
                     <div className="px-6 py-4 border-t border-neutral/10 bg-neutral/5">
                         <button
-                            onClick={() => setStep(step === 'vibe' ? 'photo' : 'vibe')}
+                            onClick={() => {
+                                if (step === 'vibe') setStep('photo');
+                                else if (step === 'behavior') setStep('vibe');
+                                else if (step === 'note') setStep('behavior');
+                            }}
                             className="text-sm font-medium opacity-40 hover:opacity-100 transition-opacity"
                         >
-                            ← Back to {step === 'vibe' ? 'photo' : 'vibe'}
+                            ← Back
                         </button>
                     </div>
                 )}

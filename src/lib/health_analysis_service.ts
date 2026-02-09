@@ -44,9 +44,13 @@ export function analyzeHealthPatterns(entries: TimelineEntry[], catName: string)
     const anxietyPattern = detectAnxietySpike(sortedEntries, catName);
     if (anxietyPattern) insights.push(anxietyPattern);
 
-    // Pattern 4: General behavior change detection
+    // Pattern 4: General behavior change detection (Baseline Shift)
     const behaviorChange = detectBehaviorChange(sortedEntries, catName);
     if (behaviorChange) insights.push(behaviorChange);
+
+    // Pattern 5: Metabolic Drift (Appetite / Feeding Pattern Shift)
+    const appetiteDrift = detectAppetiteDrift(sortedEntries, catName);
+    if (appetiteDrift) insights.push(appetiteDrift);
 
     return insights;
 }
@@ -147,29 +151,62 @@ function detectAnxietySpike(entries: TimelineEntry[], catName: string): HealthIn
 }
 
 /**
- * Pattern 4: General Behavior Change
- * Significant deviation from baseline
+ * Pattern 4: General Behavior Change (Baseline Shift)
+ * Significant deviation from baseline over 14 days
  */
 function detectBehaviorChange(entries: TimelineEntry[], catName: string): HealthInsight | null {
-    if (entries.length < 14) return null; // Need baseline data
+    if (entries.length < 14) return null;
 
     const recent = entries.slice(0, 7);
-    const baseline = entries.slice(7, 21);
+    const baseline = entries.slice(7, 14);
 
     const recentAvgVibe = recent.reduce((sum, e) => sum + e.vibe_score, 0) / recent.length;
     const baselineAvgVibe = baseline.reduce((sum, e) => sum + e.vibe_score, 0) / baseline.length;
 
-    const vibeDiff = Math.abs(recentAvgVibe - baselineAvgVibe);
+    const vibeDiff = recentAvgVibe - baselineAvgVibe;
 
-    if (vibeDiff >= 1.5) {
-        const direction = recentAvgVibe < baselineAvgVibe ? 'more subdued' : 'more energetic';
+    if (Math.abs(vibeDiff) >= 1.0) {
+        const direction = vibeDiff < 0 ? 'more subdued' : 'more energetic';
+        const severity = Math.abs(vibeDiff) >= 1.5 ? 'attention' : 'info';
 
         return {
             id: crypto.randomUUID(),
-            severity: 'info',
+            severity: severity as any,
             pattern: 'behavior_change',
-            title: 'Mood Pattern Shift',
-            description: `We noticed ${catName} has been ${direction} compared to the previous two weeks. This might be completely normal (seasonal changes, new routines), but it's worth keeping an eye on.`,
+            title: 'Baseline Vibe Shift',
+            description: `We've detected a ${Math.abs(vibeDiff * 20).toFixed(0)}% shift in ${catName}'s average vibe compared to last week. ${catName} appears ${direction}. While often normal, sustained shifts are worth noting.`,
+            detectedAt: new Date().toISOString(),
+            relatedEntries: recent.map(e => e.id)
+        };
+    }
+
+    return null;
+}
+
+/**
+ * Pattern 5: Metabolic Drift
+ * Appetite patterns shifting week-over-week
+ */
+function detectAppetiteDrift(entries: TimelineEntry[], catName: string): HealthInsight | null {
+    if (entries.length < 14) return null;
+
+    const recent = entries.slice(0, 7);
+    const baseline = entries.slice(7, 14);
+
+    const APPETITE_SCORES = { 'good': 2, 'picky': 1, 'none': 0 };
+
+    const recentScore = recent.reduce((sum, e) => sum + APPETITE_SCORES[e.appetite], 0) / recent.length;
+    const baselineScore = baseline.reduce((sum, e) => sum + APPETITE_SCORES[e.appetite], 0) / baseline.length;
+
+    const drift = recentScore - baselineScore;
+
+    if (drift <= -0.5) {
+        return {
+            id: crypto.randomUUID(),
+            severity: 'attention',
+            pattern: 'metabolic_drift',
+            title: 'Subtle Appetite Drift',
+            description: `${catName}'s appetite pattern has shifted downward this week compared to last week. Metabolic changes can be subtle indicators of underlying health shifts. Monitoring is advised.`,
             detectedAt: new Date().toISOString(),
             relatedEntries: recent.map(e => e.id)
         };
@@ -191,6 +228,8 @@ export function getInsightContext(insight: HealthInsight): string {
             return 'Sustained anxiety can impact your cat\'s health over time. Common triggers include environmental changes, but persistent anxiety may need professional assessment.';
         case 'behavior_change':
             return 'Tracking baseline behavior helps you spot changes early. Many changes are benign, but early detection of problems is always valuable.';
+        case 'metabolic_drift':
+            return 'Dr. Quinn emphasizes that subtle shifts in how a cat eats are often the first sign of dental or metabolic issues. We flag these early so you can observe more closely.';
         default:
             return 'We analyze patterns in your cat\'s daily observations to help you spot changes that might be worth discussing with your vet.';
     }

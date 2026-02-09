@@ -8,15 +8,16 @@ interface Entry {
     id: string;
     cat_id: string;
     date: string;
-    vibe_score: number;
+    vibeScore: number;
     note?: string;
     photoUrl?: string;
     appetite?: 'good' | 'picky' | 'none';
     litter?: 'normal' | 'off';
+    trophy?: any;
 }
 
 interface TimelineFeedProps {
-    entries: Entry[];
+    entries: any[]; // Using any temporarily for easier migration
 }
 
 type ViewMode = 'list' | 'grid';
@@ -126,16 +127,17 @@ export const TimelineFeed: React.FC<TimelineFeedProps> = ({ entries }) => {
             {/* View Content */}
             {viewMode === 'list' ? (
                 // Original List View
-                <div>
+                <div className="space-y-4">
                     {entries.map((entry) => (
                         <TimelineEntry
                             key={entry.id}
                             date={entry.date}
-                            vibeScore={entry.vibe_score}
+                            vibeScore={entry.vibeScore || entry.vibe_score}
                             note={entry.note}
-                            photoUrl={entry.photoUrl}
+                            photoUrl={entry.photoUrl || entry.photo_url}
                             appetite={entry.appetite}
                             litter={entry.litter}
+                            trophy={entry.trophy || entry.trophy_data}
                         />
                     ))}
                 </div>
@@ -143,13 +145,13 @@ export const TimelineFeed: React.FC<TimelineFeedProps> = ({ entries }) => {
                 // Grid View
                 <div className="grid grid-cols-3 gap-2">
                     {entries
-                        .filter(entry => entry.photoUrl) // Only show photos in grid
+                        .filter(entry => entry.photoUrl || entry.photo_url) // Only show photos in grid
                         .map((entry) => (
                             <TimelineGridItem
                                 key={entry.id}
                                 date={entry.date}
-                                vibeScore={entry.vibe_score}
-                                photoUrl={entry.photoUrl}
+                                vibeScore={entry.vibeScore || entry.vibe_score}
+                                photoUrl={entry.photoUrl || entry.photo_url}
                             />
                         ))}
                 </div>

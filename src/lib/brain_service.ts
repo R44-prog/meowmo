@@ -3,6 +3,7 @@ export interface BrainInsight {
     type: 'correlation' | 'trend' | 'fact';
     title: string;
     description: string;
+    severity?: 'info' | 'attention' | 'vet_required';
     score?: number; // Significance score 0-100
     icon?: string;
     color?: string; // Tailwind class
@@ -36,6 +37,7 @@ export const analyzeTimeline = (entries: Entry[]): BrainInsight[] => {
                 type: 'correlation',
                 title: 'The Hunger Effect',
                 description: `When appetite is good, vibe score is ${(diff * 20).toFixed(0)}% higher.`,
+                severity: 'info',
                 icon: '🍗',
                 color: 'bg-green-100 text-green-700'
             });
@@ -54,6 +56,7 @@ export const analyzeTimeline = (entries: Entry[]): BrainInsight[] => {
             type: 'trend',
             title: 'Mood Variability Detected',
             description: `Vibe scores varied significantly this week. Consider noting environmental changes or stressors.`,
+            severity: 'attention',
             icon: '📊',
             color: 'bg-amber-100 text-amber-700'
         });
@@ -63,6 +66,7 @@ export const analyzeTimeline = (entries: Entry[]): BrainInsight[] => {
             type: 'correlation',
             title: 'Stable Routine',
             description: `Consistently calm vibes suggest a stable environment and routine.`,
+            severity: 'info',
             icon: '✓',
             color: 'bg-green-100 text-green-700'
         });
@@ -76,6 +80,7 @@ export const analyzeTimeline = (entries: Entry[]): BrainInsight[] => {
             type: 'trend',
             title: 'Litter Watch',
             description: `Recorded 'Off' litter habits ${badLitterEntries.length} times recently.`,
+            severity: 'attention',
             icon: '⚠️',
             color: 'bg-orange-100 text-orange-700'
         });

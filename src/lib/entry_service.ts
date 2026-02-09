@@ -2,60 +2,72 @@
 
 import { validateCatOwnership } from "@/middleware/ownership_guard";
 import { supabase } from "./supabase";
+import { db, LocalEntry } from "@/services/db/meowmo_db";
 
 /**
- * Milestone 4: Daily Entry Upsert
- * Create-or-Update today's observation.
- */
-
-/**
- * Creates or updates a daily health observation for a specific cat.
- * Validates ownership before proceeding with the database operation.
- * 
- * @param userId - The ID of the current user.
- * @param data - The entry data.
- * @param data.catId - The ID of the cat.
- * @param data.vibeScore - The health/vibe score (usually 1-5).
- * @param data.note - Optional text note for the entry.
- * @param data.appetite - Optional appetite status.
- * @param data.litter - Optional litter box status.
- * @returns A promise that resolves to the upserted entry.
- * @throws Error if the user is not the owner of the cat.
+ * Milestone 4: Daily Entry Upsert (Enhanced for Local-First)
+ * Create-or-Update today's observation locally first, then background sync.
  */
 export async function upsertDailyEntry(userId: string, data: {
     catId: string,
     vibeScore: number,
     note?: string,
     appetite?: 'good' | 'picky' | 'none',
-    litter?: 'normal' | 'off'
+    litter?: 'normal' | 'off',
+    photoUrl?: string,
+    behaviorId?: string,
+    trophy?: any
 }) {
-    // 1. Verify Ownership
+    // 1. Verify Ownership (Still required for security)
     const isOwner = await validateCatOwnership(userId, data.catId);
     if (!isOwner) throw new Error("Unauthorized");
 
-    // 2. SQL UPSERT (Logic)
-    // In Milestone 7, we ensure the date is normalized to YYYY-MM-DD for the unique constraint.
     const today = new Date().toISOString().split('T')[0];
+    const timestamp = new Date().toISOString();
 
-    console.log(`[ENTRY] Upserting log for cat ${data.catId} on ${today} with vibe ${data.vibeScore}`);
+    // 2. Local-First Write
+    const localEntry: LocalEntry = {
+        catId: data.catId,
+        date: today,
+        vibeScore: data.vibeScore,
+        note: data.note,
+        appetite: data.appetite,
+        litter: data.litter,
+        photoUrl: data.photoUrl,
+        behaviorId: data.behaviorId,
+        trophy: data.trophy,
+        syncStatus: 'pending',
+        updatedAt: timestamp
+    };
 
-    const { data: entry, error } = await supabase
-        .from('daily_entries')
-        .upsert({
-            cat_id: data.catId,
-            date: today,
-            vibe_score: data.vibeScore,
-            note: data.note,
-            appetite: data.appetite,
-            litter: data.litter
-        }, { onConflict: 'cat_id,date' })
-        .select()
-        .single();
+    console.log(`[ENTRY] Saving local-first log for cat ${data.catId} on ${today}`);
+    await db.saveEntry(localEntry);
 
-    if (error) {
-        console.error("[ENTRY] Database error:", error);
-        throw error;
+    // 3. Background Sync Attempt
+    try {
+        const { data: entry, error } = await supabase
+            .from('daily_entries')
+            .upsert({
+                cat_id: data.catId,
+                date: today,
+                vibe_score: data.vibeScore,
+                note: data.note,
+                appetite: data.appetite,
+                litter: data.litter,
+                photo_url: data.photoUrl, // Ensure schema matches
+                behavior_id: data.behaviorId,
+                trophy_data: data.trophy // Assumes JSONB col
+            }, { onConflict: 'cat_id,date' })
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        // 4. Mark as Synced
+        await db.entries.where({ catId: data.catId, date: today }).modify({ syncStatus: 'synced' });
+        return entry;
+    } catch (err) {
+        console.warn("[ENTRY] Background sync failed (offline?), will retry later:", err);
+        return localEntry; // Return local even if sync fails
     }
-
-    return entry;
 }
