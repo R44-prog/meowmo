@@ -239,7 +239,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose, entries
                                 window.location.reload();
                             }
                         }}
-                        className="w-full py-3 text-sm text-red-500 hover:bg-red-50 rounded-xl transition-colors"
+                        className="w-full py-3 text-sm text-red-400 hover:bg-red-500/10 rounded-xl transition-colors border border-red-500/20"
                     >
                         Reset App Data
                     </button>
