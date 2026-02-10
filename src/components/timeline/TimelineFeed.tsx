@@ -144,16 +144,14 @@ export const TimelineFeed: React.FC<TimelineFeedProps> = ({ entries }) => {
             ) : (
                 // Grid View
                 <div className="grid grid-cols-3 gap-2">
-                    {entries
-                        .filter(entry => entry.photoUrl || entry.photo_url) // Only show photos in grid
-                        .map((entry) => (
-                            <TimelineGridItem
-                                key={entry.id}
-                                date={entry.date}
-                                vibeScore={entry.vibeScore || entry.vibe_score}
-                                photoUrl={entry.photoUrl || entry.photo_url}
-                            />
-                        ))}
+                    {entries.map((entry) => (
+                        <TimelineGridItem
+                            key={entry.id}
+                            date={entry.date}
+                            vibeScore={entry.vibeScore || entry.vibe_score}
+                            photoUrl={entry.photoUrl || entry.photo_url}
+                        />
+                    ))}
                 </div>
             )}
         </div>
