@@ -107,33 +107,33 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose, entries
                     {/* Insights Cards */}
                     <div className="grid grid-cols-3 gap-3">
                         {/* Total Entries */}
-                        <div className="bg-white rounded-xl p-4 border border-neutral/10 calm-shadow text-center">
-                            <TrendingUp className="w-5 h-5 mx-auto mb-2 text-accent/60" />
-                            <div className="text-2xl font-bold text-accent">{totalEntries}</div>
-                            <div className="text-xs text-neutral/60">Total Logs</div>
+                        <div className="glass rounded-xl p-4 border border-white/5 shadow-2xl text-center">
+                            <TrendingUp className="w-5 h-5 mx-auto mb-2 text-accent/20" />
+                            <div className="text-2xl font-black text-accent">{totalEntries}</div>
+                            <div className="text-[10px] font-bold text-accent/20 uppercase tracking-widest">Total Logs</div>
                         </div>
 
                         {/* Current Streak */}
-                        <div className="bg-white rounded-xl p-4 border border-neutral/10 calm-shadow text-center">
-                            <Flame className="w-5 h-5 mx-auto mb-2 text-orange-500" />
-                            <div className="text-2xl font-bold text-accent">{currentStreak}</div>
-                            <div className="text-xs text-neutral/60">Day Streak</div>
+                        <div className="glass rounded-xl p-4 border border-white/5 shadow-2xl text-center">
+                            <Flame className="w-5 h-5 mx-auto mb-2 text-amber shadow-[0_0_10px_rgba(217,119,6,0.3)]" />
+                            <div className="text-2xl font-black text-accent">{currentStreak}</div>
+                            <div className="text-[10px] font-bold text-accent/20 uppercase tracking-widest">Day Streak</div>
                         </div>
 
                         {/* Most Common Vibe */}
-                        <div className="bg-white rounded-xl p-4 border border-neutral/10 calm-shadow text-center">
-                            <BarChart3 className="w-5 h-5 mx-auto mb-2 text-blue-500" />
-                            <div className="text-2xl font-bold text-accent">
+                        <div className="glass rounded-xl p-4 border border-white/5 shadow-2xl text-center">
+                            <BarChart3 className="w-5 h-5 mx-auto mb-2 text-blue-400" />
+                            <div className="text-2xl font-black text-accent">
                                 {Object.keys(vibeDistribution).length > 0
                                     ? Object.entries(vibeDistribution).sort((a, b) => b[1] - a[1])[0]?.[1] || 0
                                     : 0}
                             </div>
-                            <div className="text-xs text-neutral/60">Top Vibe</div>
+                            <div className="text-[10px] font-bold text-accent/20 uppercase tracking-widest">Top Vibe</div>
                         </div>
                     </div>
 
                     {/* Wake-up Triggers */}
-                    <div className="bg-white rounded-xl p-4 border border-blue-100 calm-shadow">
+                    <div className="glass rounded-xl p-4 border border-amber/10 shadow-2xl">
                         <h3 className="text-sm font-medium text-accent/80 mb-3 flex items-center gap-2">
                             <Zap className="w-4 h-4 text-blue-500" />
                             Wake-up Triggers
@@ -161,7 +161,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose, entries
                     </div>
 
                     {/* Vibe Distribution */}
-                    <div className="bg-white rounded-xl p-4 border border-neutral/10 calm-shadow">
+                    <div className="glass rounded-xl p-4 border border-white/5 shadow-2xl">
                         <h3 className="text-sm font-medium text-accent/80 mb-3">Vibe Distribution</h3>
                         <div className="space-y-2">
                             {Object.entries(VIBE_MAP).map(([score, vibe]) => {
@@ -186,7 +186,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose, entries
                     </div>
 
                     {/* All Entries Table */}
-                    <div className="bg-white rounded-xl border border-neutral/10 calm-shadow overflow-hidden">
+                    <div className="glass rounded-xl border border-white/5 shadow-2xl overflow-hidden">
                         <h3 className="text-sm font-medium text-accent/80 px-4 py-3 border-b border-neutral/10">
                             All Entries ({totalEntries})
                         </h3>
@@ -197,20 +197,20 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose, entries
                                 </div>
                             ) : (
                                 <table className="w-full text-sm">
-                                    <thead className="bg-neutral/5 sticky top-0">
+                                    <thead className="bg-white/5 sticky top-0">
                                         <tr>
-                                            <th className="text-left px-4 py-2 text-xs font-medium text-neutral/60">Date</th>
-                                            <th className="text-center px-2 py-2 text-xs font-medium text-neutral/60">Vibe</th>
-                                            <th className="text-center px-2 py-2 text-xs font-medium text-neutral/60">🍲</th>
-                                            <th className="text-center px-2 py-2 text-xs font-medium text-neutral/60">📦</th>
+                                            <th className="text-left px-4 py-2 text-[10px] font-black text-accent/30 uppercase tracking-widest">Date</th>
+                                            <th className="text-center px-2 py-2 text-[10px] font-black text-accent/30 uppercase tracking-widest">Vibe</th>
+                                            <th className="text-center px-2 py-2 text-[10px] font-black text-accent/30 uppercase tracking-widest">Appetite</th>
+                                            <th className="text-center px-2 py-2 text-[10px] font-black text-accent/30 uppercase tracking-widest">Litter</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-neutral/5">
                                         {entries.map((entry) => {
                                             const vibe = VIBE_MAP[entry.vibe_score] || VIBE_MAP[2];
                                             return (
-                                                <tr key={entry.id} className="hover:bg-neutral/5">
-                                                    <td className="px-4 py-2 text-neutral/70">
+                                                <tr key={entry.id} className="hover:bg-white/5 border-b border-white/5">
+                                                    <td className="px-4 py-2 text-accent/60 font-medium">
                                                         {new Date(entry.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                                                     </td>
                                                     <td className="text-center px-2 py-2">

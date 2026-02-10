@@ -59,7 +59,7 @@ export const ExportButton: React.FC<ExportButtonProps> = ({ entries, catName, is
 
     return (
         <div className="relative">
-            <div className="bg-white rounded-2xl p-4 border border-neutral/10 calm-shadow">
+            <div className="glass rounded-2xl p-4 border border-white/5 shadow-2xl">
                 <div className="flex items-start justify-between gap-3">
                     <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
@@ -95,7 +95,7 @@ export const ExportButton: React.FC<ExportButtonProps> = ({ entries, catName, is
                             </button>
 
                             {isDropdownOpen && (
-                                <div className="absolute top-full mt-1 left-0 right-0 bg-white border border-neutral/20 rounded-xl shadow-lg overflow-hidden z-10">
+                                <div className="absolute top-full mt-1 left-0 right-0 glass border border-white/10 rounded-xl shadow-2xl overflow-hidden z-20">
                                     {exportOptions.map(days => (
                                         <button
                                             key={days}

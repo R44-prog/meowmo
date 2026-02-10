@@ -49,17 +49,17 @@ export const PrivacyLock: React.FC<PrivacyLockProps> = ({ children }) => {
     }
 
     return (
-        <div className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center p-6 animate-in fade-in duration-500">
+        <div className="fixed inset-0 z-[100] bg-midnight flex flex-col items-center justify-center p-6 animate-in fade-in duration-500">
             {/* Background Blur Simulation */}
-            <div className="absolute inset-0 bg-white/40 backdrop-blur-xl -z-10" />
+            <div className="absolute inset-0 bg-surface/40 backdrop-blur-3xl -z-10" />
 
             <div className="w-full max-w-xs space-y-12 text-center">
                 <div className="space-y-4">
-                    <div className="w-20 h-20 bg-accent/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                        <Lock className="w-10 h-10 text-accent" />
+                    <div className="w-20 h-20 bg-amber/10 rounded-3xl flex items-center justify-center mx-auto mb-6 border border-amber/20 shadow-2xl">
+                        <Lock className="w-10 h-10 text-amber" />
                     </div>
-                    <h2 className="text-2xl font-black tracking-tight text-accent">Meowmo Locked</h2>
-                    <p className="text-sm text-neutral-500 font-medium">Enter PIN to access memories</p>
+                    <h2 className="text-2xl font-black tracking-tighter text-accent uppercase">Meowmo Locked</h2>
+                    <p className="text-[10px] text-accent/30 font-bold uppercase tracking-widest">Enter PIN to access memories</p>
                 </div>
 
                 {/* PIN Dots */}
@@ -70,8 +70,8 @@ export const PrivacyLock: React.FC<PrivacyLockProps> = ({ children }) => {
                             className={cn(
                                 "w-4 h-4 rounded-full border-2 transition-all duration-200",
                                 pin.length > i
-                                    ? "bg-accent border-accent scale-110"
-                                    : "border-neutral-200",
+                                    ? "bg-amber border-amber scale-110 shadow-[0_0_15px_rgba(217,119,6,0.5)]"
+                                    : "border-white/10",
                                 error && "bg-red-500 border-red-500 animate-shake"
                             )}
                         />
@@ -84,7 +84,7 @@ export const PrivacyLock: React.FC<PrivacyLockProps> = ({ children }) => {
                         <button
                             key={num}
                             onClick={() => handlePinInput(num.toString())}
-                            className="w-16 h-16 rounded-full bg-white border border-neutral-100 text-xl font-bold text-accent shadow-sm active:scale-90 active:bg-neutral-50 transition-all flex items-center justify-center"
+                            className="w-16 h-16 rounded-full glass border border-white/5 text-xl font-black text-accent shadow-2xl active:scale-90 active:bg-white/10 transition-all flex items-center justify-center"
                         >
                             {num}
                         </button>
@@ -92,21 +92,21 @@ export const PrivacyLock: React.FC<PrivacyLockProps> = ({ children }) => {
                     <div /> {/* Spacer */}
                     <button
                         onClick={() => handlePinInput('0')}
-                        className="w-16 h-16 rounded-full bg-white border border-neutral-100 text-xl font-bold text-accent shadow-sm active:scale-90 active:bg-neutral-50 transition-all flex items-center justify-center"
+                        className="w-16 h-16 rounded-full glass border border-white/5 text-xl font-black text-accent shadow-2xl active:scale-90 active:bg-white/10 transition-all flex items-center justify-center"
                     >
                         0
                     </button>
                     <button
                         onClick={simulateBiometrics}
                         disabled={isSimulatingBiometrics}
-                        className="w-16 h-16 rounded-full bg-accent/10 text-accent flex items-center justify-center active:scale-90 transition-all disabled:opacity-50"
+                        className="w-16 h-16 rounded-full bg-amber/10 text-amber flex items-center justify-center active:scale-90 transition-all disabled:opacity-50 border border-amber/20 shadow-2xl"
                     >
                         {isSimulatingBiometrics ? <ShieldCheck className="w-8 h-8 animate-pulse" /> : <Fingerprint className="w-8 h-8" />}
                     </button>
                 </div>
 
                 <div className="pt-8">
-                    <p className="text-xs text-neutral-400 font-medium">Security for your cat's privacy.</p>
+                    <p className="text-[9px] text-accent/10 font-black uppercase tracking-[0.3em]">Ethical Security • Built for Trust</p>
                 </div>
             </div>
         </div>

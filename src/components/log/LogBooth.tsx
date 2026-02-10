@@ -16,11 +16,11 @@ interface LogBoothProps {
 }
 
 const VIBE_OPTIONS = [
-    { score: 1, label: 'Happy', icon: '😊', color: 'text-emerald-500 bg-emerald-50' },
-    { score: 2, label: 'Quiet', icon: '😌', color: 'text-blue-500 bg-blue-50' },
-    { score: 3, label: 'Anxious', icon: '😟', color: 'text-amber-500 bg-amber-50' },
-    { score: 4, label: 'Hide-y', icon: '🫣', color: 'text-indigo-500 bg-indigo-50' },
-    { score: 5, label: 'Energetic', icon: '⚡', color: 'text-orange-500 bg-orange-50' },
+    { score: 1, label: 'Happy', icon: '😊', color: 'text-emerald-400 bg-emerald-500/10' },
+    { score: 2, label: 'Quiet', icon: '😌', color: 'text-blue-400 bg-blue-500/10' },
+    { score: 3, label: 'Anxious', icon: '😟', color: 'text-amber bg-amber/10' },
+    { score: 4, label: 'Hide-y', icon: '🫣', color: 'text-indigo-400 bg-indigo-500/10' },
+    { score: 5, label: 'Energetic', icon: '⚡', color: 'text-orange-400 bg-orange-500/10' },
 ];
 
 export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, catName }) => {
@@ -123,17 +123,17 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
-            <div className="w-full max-w-lg bg-white sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[90vh] sm:h-auto animate-in slide-in-from-bottom-full duration-500">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-midnight/60 backdrop-blur-md animate-in fade-in duration-300">
+            <div className="w-full max-w-lg bg-surface sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[90vh] sm:h-auto animate-in slide-in-from-bottom-full duration-500 border border-white/5">
                 {/* Header */}
-                <div className="px-6 py-4 flex items-center justify-between border-b border-neutral/10">
-                    <h2 className="text-lg font-semibold text-accent">Log {catName}'s Vibe</h2>
+                <div className="px-6 py-4 flex items-center justify-between border-b border-white/5">
+                    <h2 className="text-lg font-bold text-accent">Log {catName}'s Vibe</h2>
                     <button
                         onClick={onClose}
-                        className="p-2 hover:bg-neutral/5 rounded-full transition-colors"
+                        className="p-2 hover:bg-white/5 rounded-full transition-colors"
                         aria-label="Close log booth"
                     >
-                        <X size={20} className="opacity-40" />
+                        <X size={20} className="text-accent/30" />
                     </button>
                 </div>
 
@@ -144,7 +144,7 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                         {['photo', 'vibe', 'behavior', 'note'].map((s, i) => (
                             <div key={s} className={cn(
                                 "h-1 flex-1 rounded-full transition-colors",
-                                step === s ? "bg-accent" : "bg-neutral/10"
+                                step === s ? "bg-amber" : "bg-white/10"
                             )} />
                         ))}
                     </div>
@@ -158,14 +158,14 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                             <div
                                 onClick={() => fileInputRef.current?.click()}
                                 className={cn(
-                                    "aspect-[4/3] bg-neutral/5 border-2 border-dashed rounded-3xl flex flex-col items-center justify-center space-y-4 cursor-pointer hover:bg-neutral/10 transition-colors group",
-                                    showPhotoError ? "border-red-300 bg-red-50/50 animate-shake" : "border-neutral/20"
+                                    "aspect-[4/3] bg-white/5 border-2 border-dashed rounded-3xl flex flex-col items-center justify-center space-y-4 cursor-pointer hover:bg-white/10 transition-colors group",
+                                    showPhotoError ? "border-red-500/50 bg-red-500/5 animate-shake" : "border-white/10"
                                 )}
                             >
-                                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
-                                    <Camera size={32} className={cn("text-accent", showPhotoError && "text-red-500")} />
+                                <div className="w-16 h-16 bg-surface rounded-2xl flex items-center justify-center shadow-2xl border border-white/5 group-hover:scale-110 transition-transform">
+                                    <Camera size={32} className={cn("text-amber", showPhotoError && "text-red-400")} />
                                 </div>
-                                <span className="text-sm font-medium opacity-40">Tap to open camera</span>
+                                <span className="text-sm font-medium text-accent/20">Tap to open camera</span>
                                 {showPhotoError && (
                                     <div className="absolute inset-x-0 bottom-4 px-4">
                                         <div className="bg-red-500 text-white text-sm font-medium px-4 py-2 rounded-xl shadow-lg flex items-center gap-2">
@@ -213,8 +213,8 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                                             className={cn(
                                                 "flex-shrink-0 w-32 aspect-square snap-center rounded-3xl border-2 flex flex-col items-center justify-center gap-2 transition-all active:scale-95 group",
                                                 vibe === opt.score
-                                                    ? "border-accent bg-accent/5 ring-4 ring-accent/10"
-                                                    : "border-neutral/10 bg-white"
+                                                    ? "border-amber bg-amber/5 ring-4 ring-amber/10 shadow-xl"
+                                                    : "border-white/5 bg-white/5"
                                             )}
                                         >
                                             <div className={cn("text-4xl", vibe === opt.score ? "scale-125 duration-300" : "opacity-60 group-hover:opacity-100 transition-opacity")}>
@@ -222,7 +222,7 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                                             </div>
                                             <span className={cn(
                                                 "text-[10px] font-bold uppercase tracking-wider",
-                                                vibe === opt.score ? "text-accent" : "text-neutral/40"
+                                                vibe === opt.score ? "text-amber" : "text-accent/20"
                                             )}>
                                                 {opt.label}
                                             </span>
@@ -233,22 +233,22 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                                     ))}
                                 </div>
                                 {/* Gradient Fades */}
-                                <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none" />
-                                <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none" />
+                                <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-surface to-transparent pointer-events-none" />
+                                <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-surface to-transparent pointer-events-none" />
                             </div>
 
                             {/* Quick Log CTA */}
-                            <div className="p-4 bg-accent/5 rounded-2xl border border-accent/10 flex items-center justify-between gap-4">
+                            <div className="p-4 bg-amber/5 rounded-2xl border border-amber/10 flex items-center justify-between gap-4">
                                 <div className="space-y-0.5">
-                                    <h4 className="text-xs font-bold text-accent uppercase tracking-wider">Fast Track</h4>
-                                    <p className="text-[10px] opacity-60">Log with current defaults.</p>
+                                    <h4 className="text-xs font-bold text-amber uppercase tracking-wider">Fast Track</h4>
+                                    <p className="text-[10px] text-accent/40">Log with current defaults.</p>
                                 </div>
                                 <button
                                     onClick={() => {
                                         if (!vibe) setVibe(1);
                                         handleSave();
                                     }}
-                                    className="px-4 py-2 bg-accent text-white text-xs font-bold rounded-xl shadow-sm hover:scale-105 active:scale-95 transition-all"
+                                    className="px-4 py-2 bg-amber text-white text-xs font-bold rounded-xl shadow-lg shadow-amber/20 hover:scale-105 active:scale-95 transition-all"
                                 >
                                     Quick Save
                                 </button>
@@ -278,8 +278,8 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                                                     className={cn(
                                                         "p-3 rounded-2xl border text-left transition-all active:scale-95",
                                                         behavior === challenge.id
-                                                            ? "border-accent bg-accent/5 ring-2 ring-accent/10"
-                                                            : "border-neutral/10 hover:border-accent/40 bg-white"
+                                                            ? "border-amber bg-amber/5 ring-2 ring-amber/10 shadow-lg"
+                                                            : "border-white/5 hover:border-amber/40 bg-white/5"
                                                     )}
                                                 >
                                                     <div className="font-bold text-xs truncate">{challenge.name}</div>
@@ -314,7 +314,7 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-bold uppercase tracking-wider opacity-40 ml-1">Appetite</label>
-                                    <div className="flex bg-neutral/5 p-1 rounded-xl gap-1">
+                                    <div className="flex bg-white/5 p-1 rounded-xl gap-1">
                                         {[
                                             { id: 'good', label: '🍲' },
                                             { id: 'picky', label: '🥗' },
@@ -335,7 +335,7 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-bold uppercase tracking-wider opacity-40 ml-1">Litter Box</label>
-                                    <div className="flex bg-neutral/5 p-1 rounded-xl gap-1">
+                                    <div className="flex bg-white/5 p-1 rounded-xl gap-1">
                                         {[
                                             { id: 'normal', label: '✅' },
                                             { id: 'off', label: '⚠️' }
@@ -356,12 +356,12 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                             </div>
 
                             <div className="relative">
-                                <FileText className="absolute top-4 left-4 size-5 opacity-20" />
+                                <FileText className="absolute top-4 left-4 size-5 text-accent/20" />
                                 <textarea
                                     value={note}
                                     onChange={(e) => setNote(e.target.value)}
                                     placeholder="Add any specific details or notes..."
-                                    className="w-full h-32 p-4 pl-12 bg-neutral/5 border border-neutral/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all text-base resize-none"
+                                    className="w-full h-32 p-4 pl-12 bg-white/5 border border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-amber/20 transition-all text-base resize-none text-accent"
                                 />
                             </div>
                             <button
@@ -384,14 +384,14 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
 
                 {/* Footer Controls (for navigating back) */}
                 {step !== 'photo' && (
-                    <div className="px-6 py-4 border-t border-neutral/10 bg-neutral/5">
+                    <div className="px-6 py-4 border-t border-white/5 bg-white/5">
                         <button
                             onClick={() => {
                                 if (step === 'vibe') setStep('photo');
                                 else if (step === 'behavior') setStep('vibe');
                                 else if (step === 'note') setStep('behavior');
                             }}
-                            className="text-sm font-medium opacity-40 hover:opacity-100 transition-opacity"
+                            className="text-sm font-bold text-accent/30 hover:text-amber transition-colors"
                         >
                             ← Back
                         </button>

@@ -57,7 +57,7 @@ function App() {
                                     value={tempName}
                                     onChange={(e) => setTempName(e.target.value)}
                                     placeholder="e.g. Luna"
-                                    className="w-full px-4 py-3 bg-white border border-neutral/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all text-lg text-center calm-shadow"
+                                    className="w-full px-4 py-3 glass border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber/20 transition-all text-lg text-center text-accent"
                                     autoFocus
                                     aria-required="true"
                                 />

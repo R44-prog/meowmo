@@ -27,13 +27,13 @@ export class ErrorBoundary extends Component<Props, State> {
         if (this.state.hasError) {
             return (
                 <div className="min-h-screen flex items-center justify-center p-6 bg-neutral/5">
-                    <div className="max-w-md w-full calm-shadow bg-white rounded-3xl p-8 text-center space-y-6 border border-red-100">
+                    <div className="max-w-md w-full glass rounded-[2rem] p-8 text-center space-y-6 border border-red-500/20 shadow-2xl">
                         <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center text-red-500 mx-auto">
                             <AlertCircle size={32} />
                         </div>
                         <div className="space-y-2">
-                            <h1 className="text-xl font-bold text-neutral-800 tracking-tight">Something skipped a beat</h1>
-                            <p className="text-sm text-neutral-500 leading-relaxed">
+                            <h1 className="text-xl font-black text-accent tracking-tighter uppercase">Something skipped a beat</h1>
+                            <p className="text-sm text-accent/50 leading-relaxed font-medium">
                                 Even cats stumble sometimes. We've recorded the issue, but the app needs a quick refresh to get back in its groove.
                             </p>
                         </div>
@@ -45,7 +45,7 @@ export class ErrorBoundary extends Component<Props, State> {
                             Re-center App
                         </button>
                         <div className="pt-4 border-t border-neutral/5">
-                            <p className="text-[10px] text-neutral-300 uppercase tracking-widest font-black">Clinical Error Logged</p>
+                            <p className="text-[10px] text-accent/20 uppercase tracking-[0.2em] font-black">Clinical Error Logged</p>
                             {this.state.error && (
                                 <code className="block mt-2 text-[10px] text-red-400 bg-red-50/50 p-2 rounded-lg break-all italic">
                                     {this.state.error.message}
