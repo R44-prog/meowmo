@@ -28,7 +28,7 @@ export class ErrorBoundary extends Component<Props, State> {
             return (
                 <div className="min-h-screen flex items-center justify-center p-6 bg-neutral/5">
                     <div className="max-w-md w-full glass rounded-[2rem] p-8 text-center space-y-6 border border-red-500/20 shadow-2xl">
-                        <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center text-red-500 mx-auto">
+                        <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-500 mx-auto border border-red-500/20">
                             <AlertCircle size={32} />
                         </div>
                         <div className="space-y-2">
@@ -39,7 +39,7 @@ export class ErrorBoundary extends Component<Props, State> {
                         </div>
                         <button
                             onClick={() => window.location.reload()}
-                            className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-bold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-accent/20"
+                            className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-accent text-midnight rounded-2xl font-black uppercase tracking-tighter hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-amber/20"
                         >
                             <RefreshCw size={20} />
                             Re-center App

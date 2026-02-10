@@ -65,7 +65,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose, c
                                 <button
                                     onClick={handleSave}
                                     disabled={!nameDraft.trim() || nameDraft === catName}
-                                    className="px-4 py-2 bg-amber text-white hover:opacity-90 rounded-xl transition-all disabled:opacity-20 disabled:grayscale shadow-lg shadow-amber/20"
+                                    className="px-4 py-2 bg-amber text-midnight hover:opacity-90 rounded-xl transition-all disabled:opacity-20 disabled:grayscale shadow-lg shadow-amber/20 font-bold"
                                     aria-label="Save name"
                                 >
                                     <Save className="w-5 h-5" />

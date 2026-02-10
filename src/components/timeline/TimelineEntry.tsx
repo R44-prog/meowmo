@@ -41,7 +41,7 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = React.memo(({ date, v
             <div className="flex-1 pb-10">
                 <div className="calm-shadow rounded-3xl glass overflow-hidden border border-white/5 transition-transform hover:scale-[1.005]">
                     {/* Date Header */}
-                    <div className="px-6 py-3 bg-white/5 flex items-center justify-between">
+                    <div className="px-6 py-3 bg-surface/40 flex items-center justify-between border-b border-white/5">
                         <div className="flex items-center gap-2 text-xs font-semibold text-accent/40">
                             <Calendar className="w-3.5 h-3.5" />
                             {new Date(date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
@@ -71,7 +71,7 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = React.memo(({ date, v
 
                     <div className="p-6 space-y-4">
                         {/* Real Capture Photo */}
-                        <div className="aspect-[4/3] bg-neutral/5 rounded-2xl flex items-center justify-center text-neutral/20 overflow-hidden relative border border-neutral/10">
+                        <div className="aspect-[4/3] bg-midnight/40 rounded-2xl flex items-center justify-center text-accent/10 overflow-hidden relative border border-white/5">
                             {photoUrl ? (
                                 <img src={photoUrl} alt="Cat" className="w-full h-full object-cover" />
                             ) : (
@@ -125,7 +125,7 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = React.memo(({ date, v
                         )}
 
                         {note && (
-                            <div className="flex gap-3 text-sm text-accent/70 leading-relaxed bg-white/5 p-4 rounded-xl border border-white/5 italic">
+                            <div className="flex gap-3 text-sm text-accent/70 leading-relaxed bg-surface/40 p-4 rounded-xl border border-white/5 italic">
                                 <FileText className="w-4 h-4 mt-0.5 flex-shrink-0 opacity-40 text-amber" />
                                 <p>{note}</p>
                             </div>

@@ -28,7 +28,7 @@ export const TimelineGridItem: React.FC<TimelineGridItemProps> = React.memo(({ d
     return (
         <button
             onClick={onClick}
-            className="aspect-square relative rounded-xl overflow-hidden bg-neutral/10 group focus:outline-none focus:ring-2 focus:ring-accent/50"
+            className="aspect-square relative rounded-xl overflow-hidden glass group focus:outline-none focus:ring-2 focus:ring-amber/50"
         >
             {photoUrl ? (
                 <img src={photoUrl} alt="Cat" className="w-full h-full object-cover transition-transform group-hover:scale-105" />
@@ -40,7 +40,7 @@ export const TimelineGridItem: React.FC<TimelineGridItemProps> = React.memo(({ d
 
             {/* Vibe indicator dot */}
             <div className={cn(
-                "absolute bottom-2 right-2 w-6 h-6 rounded-full flex items-center justify-center text-white shadow-lg",
+                "absolute bottom-2 right-2 w-7 h-7 rounded-full flex items-center justify-center text-midnight shadow-xl border border-white/20",
                 vibe.bgColor
             )}>
                 {vibe.icon}

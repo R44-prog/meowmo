@@ -65,7 +65,7 @@ function App() {
                             <button
                                 type="submit"
                                 disabled={!tempName.trim()}
-                                className="w-full px-8 py-3 bg-accent text-white rounded-xl font-medium hover:opacity-90 disabled:opacity-50 transition-all shadow-lg shadow-accent/10"
+                                className="w-full px-8 py-3 bg-accent text-midnight rounded-xl font-bold uppercase tracking-tighter hover:opacity-90 disabled:opacity-50 transition-all shadow-xl shadow-amber/10"
                                 aria-label={`Continue with name ${tempName}`}
                             >
                                 Get Started

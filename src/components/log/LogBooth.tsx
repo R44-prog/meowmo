@@ -367,7 +367,7 @@ export const LogBooth: React.FC<LogBoothProps> = ({ isOpen, onClose, onSave, cat
                             <button
                                 onClick={handleSave}
                                 disabled={isUploading}
-                                className="w-full py-4 bg-accent text-white rounded-2xl font-bold text-lg shadow-lg shadow-accent/20 hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                                className="w-full py-4 bg-accent text-midnight rounded-2xl font-bold text-lg shadow-xl shadow-amber/20 hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                             >
                                 {isUploading ? (
                                     <Loader2 className="animate-spin" size={24} />

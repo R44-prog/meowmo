@@ -102,7 +102,7 @@ export const TimelineFeed: React.FC<TimelineFeedProps> = ({ entries }) => {
                     <button
                         onClick={() => setViewMode('list')}
                         className={`p-2 rounded-md transition-colors ${viewMode === 'list'
-                            ? 'bg-amber text-white shadow-lg shadow-amber/20'
+                            ? 'bg-amber text-midnight shadow-lg shadow-amber/20 font-bold'
                             : 'text-accent/30 hover:text-accent/60'
                             }`}
                         aria-label="List view"
@@ -113,7 +113,7 @@ export const TimelineFeed: React.FC<TimelineFeedProps> = ({ entries }) => {
                     <button
                         onClick={() => setViewMode('grid')}
                         className={`p-2 rounded-md transition-colors ${viewMode === 'grid'
-                            ? 'bg-amber text-white shadow-lg shadow-amber/20'
+                            ? 'bg-amber text-midnight shadow-lg shadow-amber/20 font-bold'
                             : 'text-accent/30 hover:text-accent/60'
                             }`}
                         aria-label="Grid view"

@@ -111,7 +111,7 @@ export const TimelinePage: React.FC<TimelinePageProps> = ({ catName }) => {
             {/* Floating Action Button (Only on Timeline) */}
             <button
                 onClick={() => setIsLogBoothOpen(true)}
-                className="fixed bottom-24 right-8 w-14 h-14 bg-accent text-white rounded-full flex items-center justify-center shadow-lg shadow-accent/20 hover:scale-105 active:scale-95 transition-transform z-30"
+                className="fixed bottom-24 right-8 w-14 h-14 bg-accent text-midnight rounded-full flex items-center justify-center shadow-xl shadow-amber/20 hover:scale-105 active:scale-95 transition-transform z-30 font-bold"
                 aria-label="Log new activity"
             >
                 <Plus size={28} />

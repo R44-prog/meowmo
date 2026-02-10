@@ -44,7 +44,7 @@ export const MeowmoLogo: React.FC<MeowmoLogoProps> = ({
                 </svg>
 
                 {/* Shine Effect */}
-                <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-white opacity-20 rounded-full blur-md -mr-1 -mt-1" />
+                <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-orange-200/20 rounded-full blur-md -mr-1 -mt-1" />
             </div>
 
             {showText && (
